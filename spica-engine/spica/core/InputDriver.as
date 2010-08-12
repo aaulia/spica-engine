@@ -24,8 +24,8 @@ package spica.core
 		public static function set showDefaultPointer(v:Boolean):void
 		{
 			v == true
-			? Mouse.hide()
-			: Mouse.hide());
+			? Mouse.show()
+			: Mouse.hide();
 		}
 		
 		public function InputDriver(stage:Stage)
