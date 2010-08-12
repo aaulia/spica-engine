@@ -38,7 +38,6 @@ package spica.shaders
 			}
 			
 			point.x = point.y = 0;
-			source.fillRect(source.rect, 0x00000000);
 			source.copyPixels(rgbCh, rgbCh.rect, point);
 		}
 		
