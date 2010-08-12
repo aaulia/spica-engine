@@ -131,7 +131,7 @@ package spica.algorithm.pathfinding
 				
 				result.reverse();
 			}
-			else if (nearest_on_fail)
+			else if (nearest)
 			{
 				closed.sort(sortH);
 				

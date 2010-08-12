@@ -1,8 +1,6 @@
 package spica.core
 {
 	import flash.display.BitmapData;
-	import flash.text.engine.RenderingMode;
-	import spica.algorithm.pathfinding.AStar;
 	/**
 	 * ...
 	 * @author Achmad Aulia Noorhakim
