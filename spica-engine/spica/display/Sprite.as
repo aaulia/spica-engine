@@ -21,6 +21,7 @@ package spica.display
 		public  var offsetX:int                = 0;
 		public  var offsetY:int                = 0;
 		
+		
 		private var _frame :int                = -1;
 		private var _height:int                = -1;
 		private var _width :int                = -1;

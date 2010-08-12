@@ -16,6 +16,7 @@ package spica.display
 		public  var offsetX  :int               = 0;
 		public  var offsetY  :int               = 0;
 		
+		
 		private var sprite   :Sprite            = null;
 		private var sequences:Vector.<Sequence> = null;
 		private var seqIndex :int               = -1;
@@ -26,7 +27,7 @@ package spica.display
 		{
 			sprite    = new Sprite(linkage, width, height);
 			sequences = new Vector.<Sequence>();
-			isActive    = false;
+			isActive  = false;
 		}
 		
 		public function loadBitmap(linkage:Class, width:int, height:int):Animation
