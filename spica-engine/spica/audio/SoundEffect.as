@@ -18,9 +18,10 @@ package spica.audio
 			loadSound(linkage);
 		}
 		
-		public function loadSound(linkage:Class):void
+		public function loadSound(linkage:Class):SoundEffect
 		{
 			sound = SoundCache.getSound(linkage);
+			return this;
 		}
 		
 		public function play(onFinish:Function = null):void
