@@ -16,16 +16,14 @@ package spica.shaders
 		private var buffer:BitmapData            = null;
 		private var point :Point                 = null;
 		private var filter:DisplacementMapFilter = null;
-		private var random:ParkMillerRandom      = null;
 		
 		public function StaticDistortionShader(width:int, height:int)
 		{
 			point  = new Point();
-			random = new ParkMillerRandom();
 			buffer = new BitmapData(width, height, true, 0x0);
 			for (var i:int = 0; i < height; ++i)
 			{
-				var c:int = random.random() * 256;
+				var c:int = Math.random() * 256;
 				buffer.fillRect(new Rectangle(0, i, width, 1), c << 16 | 255 << 24);
 			}
 			
@@ -37,7 +35,7 @@ package spica.shaders
 			if (isActive == false)
 				return;
 				
-			filter.scaleX = random.random() * 10;
+			filter.scaleX = Math.random() * 10;
 		}
 		
 		override public function postRender(source:BitmapData):void

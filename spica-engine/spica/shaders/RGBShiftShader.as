@@ -14,13 +14,11 @@ package spica.shaders
 	{
 		private var rgbCh :BitmapData        = null;
 		private var point :Point             = null;
-		private var random:ParkMillerRandom  = null;
 		
 		public function RGBShiftShader(width:int, height:int)
 		{
 			rgbCh  = new BitmapData(width, height, true, 0x00000000);
 			point  = new Point();
-			random = new ParkMillerRandom();
 		}
 		
 		override public function postRender(source:BitmapData):void
@@ -30,8 +28,8 @@ package spica.shaders
 			
 			for (var i:int = 0; i < 3; ++i)
 			{
-				point.x = -5 + random.random() * 10;
-				point.y = -5 + random.random() * 10;
+				point.x = -5 + Math.random() * 10;
+				point.y = -5 + Math.random() * 10;
 				
 				rgbCh.copyChannel(source, source.rect, point, BitmapDataChannel.ALPHA, BitmapDataChannel.ALPHA);
 				rgbCh.copyChannel(source, source.rect, point, 1 << i, 1 << i);
