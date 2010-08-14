@@ -103,8 +103,8 @@ package spica.display
 			
 			sprite.x       = x;
 			sprite.y       = y;
-			sprite.offsetX = offsetY;
-			sprite.offsetY = offsetX;
+			sprite.offsetX = offsetX;
+			sprite.offsetY = offsetY;
 			sprite.scroll  = scroll;
 			sprite.frame   = sequences[ seqIndex ].indexes[ frmIndex ];
 			

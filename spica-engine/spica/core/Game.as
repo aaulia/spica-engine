@@ -64,7 +64,11 @@ package spica.core
 			timer.update();
 			
 			scene.update(timer.elapsed);
-			scene.render(render);
+			
+			render.buffer.lock();
+				scene.render(render);
+			render.buffer.unlock();
+			
 			scene.validate();
 		}
 		

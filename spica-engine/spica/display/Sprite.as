@@ -71,13 +71,13 @@ package spica.display
 			
 			if (scroll != 0 && camera != null)
 			{
-				point.x = int(x + 0.5 - camera.offsetX * scroll) - offsetX;
-				point.y = int(y + 0.5 - camera.offsetY * scroll) - offsetY;
+				point.x = x - offsetX + int(0.5 + camera.offsetX * scroll);
+				point.y = y - offsetY + int(0.5 + camera.offsetY * scroll);
 			}
 			else
 			{
-				point.x = int(x + 0.5) - offsetX;
-				point.y = int(y + 0.5) - offsetY;
+				point.x = x - offsetX;
+				point.y = y - offsetY;
 			}
 			
 			if (point.x < -_width  || point.x > buffer.width ||
