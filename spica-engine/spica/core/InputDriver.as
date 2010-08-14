@@ -21,7 +21,7 @@ package spica.core
 		private var _mouseX  :int                = 0;
 		private var _mouseY  :int                = 0;
 		
-		public static function set showDefaultPointer(v:Boolean):void
+		public function set showDefaultPointer(v:Boolean):void
 		{
 			v == true
 			? Mouse.show()

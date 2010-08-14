@@ -98,6 +98,9 @@ package spica.display
 		
 		override public function render(render:RenderContext):void
 		{
+			if (seqIndex < 0)
+				return;
+			
 			sprite.x       = x;
 			sprite.y       = y;
 			sprite.offsetX = offsetY;
