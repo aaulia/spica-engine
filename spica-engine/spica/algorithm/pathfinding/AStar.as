@@ -10,10 +10,12 @@ package spica.algorithm.pathfinding
 		private static const ORTHOGONAL_COST:int = 2;
 		private static const DIAGONAL_COST  :int = 3;
 		
+		
 		private var map   :Vector.<int>  = null;
 		private var width :int           = 0;
 		private var height:int           = 0;
 		private var nodes :Vector.<Node> = null;
+		
 		
 		public function AStar(map:Vector.<int>, width:int, height:int = 0)
 		{
@@ -57,7 +59,7 @@ package spica.algorithm.pathfinding
 
 			var sx:int = from.x - to.x;
 			var sy:int = from.y - to.y;
-			start.H = (sx < 0 ? -sx : sx) + (sy < 0 ? -sy : sy);
+			start.H    = (sx < 0 ? -sx : sx) + (sy < 0 ? -sy : sy);
 			
 			opened[ oIndex++ ] = start;
 			while (oIndex)
@@ -118,7 +120,7 @@ package spica.algorithm.pathfinding
 				
 			}
 			
-			var rIndex:int = 0;
+			var rIndex:int            = 0;
 			var result:Vector.<Point> = null;
 			if (active == end)
 			{
@@ -140,7 +142,7 @@ package spica.algorithm.pathfinding
 				while (active)
 				{
 					result[ rIndex++ ] = new Point(active.x, active.y);
-					active = active.root;
+					active             = active.root;
 				}
 				
 				result.reverse();
@@ -163,15 +165,17 @@ package spica.algorithm.pathfinding
 
 }
 
+
+
 class Node
 {
-	public var root:Node;
-	public var G:int;
-	public var H:int;
-	public var F:int;
+	public var root:Node = null;
+	public var G   :int  = 0;
+	public var H   :int  = 0;
+	public var F   :int  = 0;
 	
-	public var x:int;
-	public var y:int;
+	public var x   :int  = 0;
+	public var y   :int  = 0;
 	
 	public function Node(x:int, y:int)
 	{
@@ -193,4 +197,5 @@ class Node
 		H    = 0;
 		F    = 0;
 	}
+	
 }
