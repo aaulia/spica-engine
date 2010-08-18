@@ -22,6 +22,8 @@ package spica.display
 		private var seqIndex :int               = -1;
 		private var frmIndex :int               = 0;
 		private var timer    :Number            = 0;
+		private var loop     :int               = -1;
+		private var onFinish :Function          = null;
 				
 		public function Animation(linkage:Class, width:int, height:int)
 		{
@@ -47,20 +49,25 @@ package spica.display
 			return this;
 		}
 		
-		public function play(name:String = ""):Animation
+		public function play(name:String = "", loop:int = -1, onFinish:Function = null):Animation
 		{
 			if (name != "")
 				seqIndex = getSequenceIndex(name);
 				
-			isActive = (seqIndex > -1);
+			this.loop     = loop;
+			this.onFinish = onFinish;
+			isActive      = (seqIndex > -1);
+			isVisible     = (seqIndex > -1);
+			
 			return this;
 		}
 		
 		public function stop():Animation
 		{
-			frmIndex = 0;
-			timer    = 0;
-			isActive = false;
+			frmIndex  = 0;
+			timer     = 0;
+			isActive  = false;
+			isVisible = false;
 			
 			return this;
 		}
@@ -116,17 +123,28 @@ package spica.display
 			if (seqIndex == -1)
 				return;
 				
+			var seqLength:int = sequences[ seqIndex ].length as int;
+			
 			timer += elapsed;
 			while (timer >= sequences[ seqIndex ].delay)
 			{
 				timer -= sequences[ seqIndex ].delay;
 				frmIndex++;
+				
+				if (loop > 0 && frmIndex == seqLength)
+					if (--loop == 0)
+					{
+						stop();
+						if (onFinish != null)
+							onFinish(this);
+							
+						return;
+					}
+				
 			}
 			
-			frmIndex %= sequences[ seqIndex ].length;
+			frmIndex %= seqLength;
 		}
-		
-		
 		
 		override public function shutdown():void
 		{
