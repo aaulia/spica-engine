@@ -17,10 +17,12 @@ package spica.math
 		private static const initialize:Boolean = doInitialize();
 		private static function doInitialize():Boolean
 		{
+			var angle:Number = 0.0;
 			for (var i:int = 0; i < 2880; ++i)
 			{
-				sin[ i ] = Math.sin(i / 8 * DEG_TO_RAD);
-				cos[ i ] = Math.cos(i / 8 * DEG_TO_RAD);
+				angle    = i / 8 * DEG_TO_RAD;
+				sin[ i ] = Math.sin(angle);
+				cos[ i ] = Math.cos(angle);
 			}
 		
 			return true;
