@@ -24,9 +24,9 @@ package spica.core
 			this.stage = stage;
 		}
 		
-		public function initiate(width:int, height:int, fps:int):Game
+		public function initiate(width:int, height:int, fps:int, scale:Number):Game
 		{
-			video  = new VideoDriver(stage, width, height, fps);
+			video  = new VideoDriver(stage, width, height, fps, scale);
 			audio  = new AudioDriver();
 			input  = new InputDriver(stage);
 			
