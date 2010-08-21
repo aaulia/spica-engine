@@ -7,16 +7,8 @@ package spica.display
 	 * ...
 	 * @author Achmad Aulia Noorhakim
 	 */
-	public class Animation extends Entity
-	{
-		public  var y        :int               = 0;
-		public  var x        :int               = 0;
-		
-		public  var scroll   :Number            = 1.0;
-		public  var offsetX  :int               = 0;
-		public  var offsetY  :int               = 0;
-		
-		
+	public class Animation extends Visual
+	{		
 		private var sprite   :Sprite            = null;
 		private var sequences:Vector.<Sequence> = null;
 		private var seqIndex :int               = -1;
@@ -40,8 +32,8 @@ package spica.display
 			return this;
 		}
 		
-		public function get width() :int { return sprite.width;  }
-		public function get height():int { return sprite.height; }
+		override public function get width ():int { return sprite.width;  }
+		override public function get height():int { return sprite.height; }
 		
 		public function addSequence(name:String, indexes:Array, fps:int):Animation
 		{

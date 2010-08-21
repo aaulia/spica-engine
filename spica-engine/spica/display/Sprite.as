@@ -12,16 +12,8 @@ package spica.display
 	 * ...
 	 * @author Achmad Aulia Noorhakim
 	 */
-	public class Sprite extends Entity
+	public class Sprite extends Visual
 	{
-		public  var x      :int                = 0;
-		public  var y      :int                = 0;
-		
-		public  var scroll :Number             = 1.0;
-		public  var offsetX:int                = 0;
-		public  var offsetY:int                = 0;
-		
-		
 		private var _frame :int                = -1;
 		private var _height:int                = -1;
 		private var _width :int                = -1;
@@ -54,8 +46,9 @@ package spica.display
 			return this;
 		}
 		
-		public function get width()     :int  { return _width; }
-		public function get height()    :int  { return _height; }
+		override public function get width ():int  { return _width;  }
+		override public function get height():int  { return _height; }
+		
 		public function get frameCount():int  { return frames.length; }
 		public function get frame()     :int  { return _frame; }
 		
