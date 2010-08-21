@@ -12,13 +12,16 @@ package spica.shaders
 	 */
 	public class RGBShiftShader extends Shader
 	{
+		public  var radius:int               = 2;
+		
 		private var rgbCh :BitmapData        = null;
 		private var point :Point             = null;
 		
-		public function RGBShiftShader(width:int, height:int)
+		public function RGBShiftShader(width:int, height:int, radius:int = 2)
 		{
-			rgbCh  = new BitmapData(width, height, true, 0x00000000);
-			point  = new Point();
+			this.rgbCh  = new BitmapData(width, height, true, 0x00000000);
+			this.point  = new Point();
+			this.radius = radius;
 		}
 		
 		override public function postRender(source:BitmapData):void
@@ -28,8 +31,8 @@ package spica.shaders
 			
 			for (var i:int = 0; i < 3; ++i)
 			{
-				point.x = -5 + Math.random() * 10;
-				point.y = -5 + Math.random() * 10;
+				point.x = -radius + Math.random() * (radius << 1);
+				point.y = -radius + Math.random() * (radius << 1);
 				
 				rgbCh.copyChannel(source, source.rect, point, BitmapDataChannel.ALPHA, BitmapDataChannel.ALPHA);
 				rgbCh.copyChannel(source, source.rect, point, 1 << i, 1 << i);
