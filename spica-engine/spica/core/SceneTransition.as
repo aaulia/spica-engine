@@ -46,6 +46,7 @@ package spica.core
 				
 				replace(next);
 			}
+			
 		}
 		
 	}

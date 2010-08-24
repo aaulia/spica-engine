@@ -49,27 +49,28 @@ package spica.math
 	 */
 	public final class ParkMillerRandom
 	{
-		private var _seed:uint = 0;
+		private var seed:uint = 0;
+		
 		public function set seed(v:uint):void
 		{
-			_seed = (v == 0)
+			seed = (v == 0)
 				? getTimer()
 				: v;
 		}
 		
-		public function ParkMillerRandom(s:uint = 0)
+		public function ParkMillerRandom(seed:uint = 0)
 		{
-			seed = s;
+			this.seed = seed;
 		}
 		
 		public function random():Number
 		{
-			return (_seed = (_seed * 16807) % 2147483647) / 2147483647;
+			return (seed = (seed * 16807) % 2147483647) / 2147483647;
 		}
 		
 		public function randomInt():uint
 		{
-			return (_seed = (_seed * 16807) % 2147483647);
+			return (seed = (seed * 16807) % 2147483647);
 		}
 		
 	}
