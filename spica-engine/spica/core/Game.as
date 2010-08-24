@@ -19,6 +19,9 @@ package spica.core
 		private var timer :TimerManager  = null;
 		private var render:RenderContext = null;
 		
+		private var elapse:int           = 0;
+		private var slice :int           = 0;
+		
 		public function Game(stage:Stage)
 		{
 			this.stage = stage;
@@ -39,26 +42,43 @@ package spica.core
 			camera = new Camera(width, height);
 			render = new RenderContext(video.buffer, camera);
 			
-			return this;
-		}
-		
-		public function run(entryPoint:Scene):Game
-		{
-			scene.goTo(entryPoint);
-			stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			elapse = 0;
+			slice  = int(1000.0 / fps + 0.5);
 			
 			return this;
 		}
 		
-		public function shutdown():void
+		public function run(entryPoint:Scene, fixedRate:Boolean = false):Game
 		{
-			scene.shutdown();
-			video.shutdown();
-			audio.shutdown();
-			input.shutdown();
+			scene.goTo(entryPoint);
+			if (fixedRate)
+				stage.addEventListener(Event.ENTER_FRAME, doFixedRateTick);
+			else 
+				stage.addEventListener(Event.ENTER_FRAME, doTimeBasedTick);
+			
+			return this;
 		}
 		
-		private function onEnterFrame(e:Event):void
+		private function doFixedRateTick(e:Event):void 
+		{
+			input.update();
+			timer.update();
+			
+			elapse += timer.elapsedInt;
+			if (elapse > slice)
+			{
+				scene.update(int(elapse / slice));
+				elapse %= slice;
+			}
+			
+			render.buffer.lock();
+				scene.render(render);
+			render.buffer.unlock();
+			
+			scene.validate();
+		}
+		
+		private function doTimeBasedTick(e:Event):void
 		{
 			input.update();
 			timer.update();
@@ -70,6 +90,14 @@ package spica.core
 			render.buffer.unlock();
 			
 			scene.validate();
+		}
+		
+		public function shutdown():void
+		{
+			scene.shutdown();
+			video.shutdown();
+			audio.shutdown();
+			input.shutdown();
 		}
 		
 	}
