@@ -17,7 +17,7 @@ package spica.display
 		
 		
 		private var font     :Sprite       = null;
-		private var hash     :Object       = null;
+		private var charMap  :Object       = null;
 		
 		private var point    :Point        = null;
 		private var index    :Vector.<int> = null;
@@ -32,13 +32,14 @@ package spica.display
 		{
 			super();
 			
-			font  = new Sprite(linkage, width, height);
-			hash  = { };
-			for (var i:int = 0; i < dict.length; ++i)
-				hash[ dict.charAt(i) ] = i;
+			font    = new Sprite(linkage, width, height);
+			point   = new Point();
+			index   = new Vector.<int>();
+			charMap = new Object();
 			
-			point = new Point();
-			index = new Vector.<int>();
+			for (var i:int = 0; i < dict.length; ++i)
+				charMap[ dict.charAt(i) ] = i;
+		
 		}
 		
 		public function get text():String { return _text; }
@@ -56,10 +57,10 @@ package spica.display
 				var c:String = v.charAt(i);
 				switch(c)
 				{
-					case " " : index[ i ] = SPACE;     break;
-					case "\t": index[ i ] = TAB;       break;
-					case "\n": index[ i ] = NEWLINE;   break;
-					default  : index[ i ] = hash[ c ]; break;
+					case " " : index[ i ] = SPACE;        break;
+					case "\t": index[ i ] = TAB;          break;
+					case "\n": index[ i ] = NEWLINE;      break;
+					default  : index[ i ] = charMap[ c ]; break;
 				}
 			}
 			
