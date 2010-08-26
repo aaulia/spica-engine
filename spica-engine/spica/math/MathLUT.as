@@ -1,5 +1,6 @@
 package spica.math
 {
+	import flash.errors.IllegalOperationError;
 	/**
 	 * ...
 	 * @author Achmad Aulia Noorhakim
@@ -9,14 +10,30 @@ package spica.math
 		public static const DEG_TO_RAD:Number =  0.017453292519943295769236907684886;
 		public static const RAD_TO_DEG:Number = 57.295779513082320876798154814105;
 		
-		public static const sin:Vector.<Number> = new Vector.<Number>(2880, true);
-		public static const cos:Vector.<Number> = new Vector.<Number>(2880, true);
-
-		
-		
-		private static const initialize:Boolean = doInitialize();
-		private static function doInitialize():Boolean
+		private static var guardFlag:Boolean = false;
+		private static var _instance:MathLUT = null;
+		public static function get instance():MathLUT
 		{
+			if (_instance == null)
+			{
+				guardFlag = true;
+				_instance = new MathLUT();
+				guardFlag = false;
+			}
+			
+			return _instance;
+		}
+		
+		
+		
+		public var sin:Vector.<Number> = new Vector.<Number>(2880, true);
+		public var cos:Vector.<Number> = new Vector.<Number>(2880, true);
+		
+		public function MathLUT()
+		{
+			if (!guardFlag)
+				throw new IllegalOperationError("You should not instantiate a Singleton Class");
+			
 			var angle:Number = 0.0;
 			for (var i:int = 0; i < 2880; ++i)
 			{
@@ -25,7 +42,6 @@ package spica.math
 				cos[ i ] = Math.cos(angle);
 			}
 		
-			return true;
 		}
 		
 	}
