@@ -13,15 +13,6 @@ package spica.core
 	{
 		private static var _instance:BitmapCache = null;
 		private static var guardFlag:Boolean     = false;
-		
-		private var cache:Dictionary = new Dictionary();
-		
-		public function BitmapCache()
-		{
-			if (!guardFlag)
-				throw new IllegalOperationError("You should not instantiate a Singleton Class");
-		}
-
 		public static function get instance():BitmapCache
 		{
 			if (_instance == null)
@@ -34,19 +25,24 @@ package spica.core
 			return _instance;
 		}
 		
+		
+		
+		private var cache:Object = new Object();
+		
+		public function BitmapCache()
+		{
+			if (!guardFlag)
+				throw new IllegalOperationError("You should not instantiate a Singleton Class");
+				
+		}
+
 		public function clear():void
 		{
-			for each(var id:String in cache)
-			{
-				var buffer:BitmapData = BitmapData(cache[ id ]);
-				if (buffer)
-					buffer.dispose();
-				
-				cache[ id ] = null;
-				delete cache[ id ];
-			}
+			for each(var bitmapData:BitmapData in cache)
+				if (bitmapData != null)
+					bitmapData.dispose();
 			
-			cache = new Dictionary(true);
+			cache = new Object();
 		}
 		
 		public function getBitmap(linkage:Class):BitmapData

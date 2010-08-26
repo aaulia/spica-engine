@@ -11,16 +11,6 @@ package spica.core
 	{
 		private static var _instance:SoundCache = null;
 		private static var guardFlag:Boolean    = false;
-		
-		private static var cache:Dictionary = new Dictionary();
-		
-		public function SoundCache()
-		{
-			if (!guardFlag)
-				throw new IllegalOperationError("You should not instantiate a Singleton Class");
-				
-		}
-		
 		public static function get instance():SoundCache
 		{
 			if (_instance == null)
@@ -33,15 +23,20 @@ package spica.core
 			return _instance;
 		}
 		
+
+		
+		private static var cache:Object = new Object();
+		
+		public function SoundCache()
+		{
+			if (!guardFlag)
+				throw new IllegalOperationError("You should not instantiate a Singleton Class");
+				
+		}
+		
 		public function clearAll():void
 		{
-			for each(var id:String in cache)
-			{
-				cache[ id ] = null;
-				delete cache[ id ];
-			}
-			
-			cache = new Dictionary(true);
+			cache = new Object();
 		}
 		
 		public function getSound(linkage:Class):Sound
