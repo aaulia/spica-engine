@@ -2,6 +2,7 @@ package spica.core
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.errors.IllegalOperationError;
 	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedSuperclassName;
 	/**
@@ -10,9 +11,30 @@ package spica.core
 	 */
 	public final class BitmapCache
 	{
-		private static var cache:Dictionary = null;
+		private static var _instance:BitmapCache = null;
+		private static var guardFlag:Boolean     = false;
+		
+		private var cache:Dictionary = new Dictionary();
+		
+		public function BitmapCache()
+		{
+			if (!guardFlag)
+				throw new IllegalOperationError("You should not instantiate a Singleton Class");
+		}
 
-		public static function clear():void
+		public static function get instance():BitmapCache
+		{
+			if (_instance == null)
+			{
+				guardFlag = true;
+				_instance = new BitmapCache();
+				guardFlag = false;
+			}
+			
+			return _instance;
+		}
+		
+		public function clear():void
 		{
 			for each(var id:String in cache)
 			{
@@ -27,11 +49,8 @@ package spica.core
 			cache = new Dictionary(true);
 		}
 		
-		public static function getBitmap(linkage:Class):BitmapData
+		public function getBitmap(linkage:Class):BitmapData
 		{
-			if (cache == null)
-				cache = new Dictionary();
-			
 			var id:String = String(linkage);
 			if (cache[ id ] != null)
 				return cache[ id ];

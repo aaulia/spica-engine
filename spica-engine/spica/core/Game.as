@@ -71,10 +71,7 @@ package spica.core
 				elapse %= slice;
 			}
 			
-			render.buffer.lock();
-				scene.render(render);
-			render.buffer.unlock();
-			
+			scene.render(render);
 			scene.validate();
 		}
 		
@@ -84,11 +81,7 @@ package spica.core
 			timer.update();
 			
 			scene.update(timer.elapsed);
-			
-			render.buffer.lock();
-				scene.render(render);
-			render.buffer.unlock();
-			
+			scene.render(render);
 			scene.validate();
 		}
 		

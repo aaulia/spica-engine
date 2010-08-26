@@ -1,5 +1,6 @@
 package spica.core
 {
+	import flash.errors.IllegalOperationError;
 	import flash.media.Sound;
 	import flash.utils.Dictionary;
 	/**
@@ -8,9 +9,31 @@ package spica.core
 	 */
 	public final class SoundCache
 	{
-		private static var cache:Dictionary = null;
+		private static var _instance:SoundCache = null;
+		private static var guardFlag:Boolean    = false;
 		
-		public static function clearAll():void
+		private static var cache:Dictionary = new Dictionary();
+		
+		public function SoundCache()
+		{
+			if (!guardFlag)
+				throw new IllegalOperationError("You should not instantiate a Singleton Class");
+				
+		}
+		
+		public static function get instance():SoundCache
+		{
+			if (_instance == null)
+			{
+				guardFlag = true;
+				_instance = new SoundCache();
+				guardFlag = false;
+			}
+			
+			return _instance;
+		}
+		
+		public function clearAll():void
 		{
 			for each(var id:String in cache)
 			{
@@ -21,11 +44,8 @@ package spica.core
 			cache = new Dictionary(true);
 		}
 		
-		public static function getSound(linkage:Class):Sound
+		public function getSound(linkage:Class):Sound
 		{
-			if (cache == null)
-				cache = new Dictionary();
-			
 			var id:String = String(linkage);
 			if (cache[ id ] != null)
 				return cache[ id ];

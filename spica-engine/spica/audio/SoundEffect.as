@@ -20,7 +20,7 @@ package spica.audio
 		
 		public function loadSound(linkage:Class):SoundEffect
 		{
-			sound = SoundCache.getSound(linkage);
+			sound = SoundCache.instance.getSound(linkage);
 			return this;
 		}
 		

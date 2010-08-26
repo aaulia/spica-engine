@@ -47,7 +47,7 @@ package spica.audio
 		
 		public function Music(linkage:Class)
 		{
-			sound     = SoundCache.getSound(linkage);
+			sound     = SoundCache.instance.getSound(linkage);
 			channel   = null;
 			transform = new SoundTransform();
 			position  = 0;

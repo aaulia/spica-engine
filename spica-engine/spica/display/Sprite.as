@@ -29,7 +29,7 @@ package spica.display
 		
 		public function loadBitmap(linkage:Class, width:int, height:int):Sprite
 		{
-			bitmap = BitmapCache.getBitmap(linkage);
+			bitmap = BitmapCache.instance.getBitmap(linkage);
 			frames = new Vector.<Rectangle>();
 			
 			if (width  == 0) width  = bitmap.width;
