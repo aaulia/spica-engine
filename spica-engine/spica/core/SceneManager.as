@@ -34,14 +34,10 @@ package spica.core
 		
 		private function switchScene():void
 		{
-			if (next is SceneTransition)
-			{
+			if ((next is SceneTransition) == true)
 				(next as SceneTransition)._setup_(game, onDirectReplace);
-			}
 			else
-			{
 				next._inject_(game);
-			}
 
 			if (scene != null)
 				scene.shutdown();
