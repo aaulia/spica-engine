@@ -20,7 +20,7 @@ package spica.core
 		protected var scene :SceneManager  = null;
 		protected var camera:Camera        = null;
 		
-		internal function _inject_(game:Game):void
+		internal function injectDependency(game:Game):void
 		{
 			video  = game.video;
 			audio  = game.audio;

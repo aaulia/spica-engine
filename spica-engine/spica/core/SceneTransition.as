@@ -24,15 +24,15 @@ package spica.core
 			return true;
 		}
 		
-		internal function _setup_(game:Game, replace:Function):void
+		internal function setup(game:Game, replace:Function):void
 		{
 			this.replace = replace;
 			
-			this._inject_(game);
+			this.injectDependency(game);
 			src = video.buffer.clone();
 			dst = video.buffer.clone();
 			
-			next._inject_(game);
+			next.injectDependency(game);
 			next.initiate();
 			next.render(new RenderContext(dst, camera));
 		}

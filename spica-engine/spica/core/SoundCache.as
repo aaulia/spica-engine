@@ -30,7 +30,10 @@ package spica.core
 		
 		
 		private static const _instance:SoundCache = new SoundCache(SingletonLock);
-		public static function get instance():SoundCache { return _instance; }
+		public static function get instance():SoundCache
+		{
+			return _instance; 
+		}
 		
 	}
 

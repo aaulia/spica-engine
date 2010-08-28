@@ -31,7 +31,10 @@ package spica.math
 
 		
 		private static const _instance:MathLUT = new MathLUT(SingletonLock);
-		public static function get instance():MathLUT { return _instance; }
+		public static function get instance():MathLUT 
+		{
+			return _instance; 
+		}
 		
 	}
 

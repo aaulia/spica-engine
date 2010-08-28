@@ -47,7 +47,10 @@ package spica.core
 		
 		
 		private static var _instance:BitmapCache = new BitmapCache(SingletonLock);
-		public static function get instance():BitmapCache { return _instance; }
+		public static function get instance():BitmapCache 
+		{
+			return _instance; 
+		}
 		
 	}
 
