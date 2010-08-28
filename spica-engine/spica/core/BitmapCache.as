@@ -11,27 +11,11 @@ package spica.core
 	 */
 	public final class BitmapCache
 	{
-		private static var _instance:BitmapCache = null;
-		private static var guardFlag:Boolean     = false;
-		public static function get instance():BitmapCache
-		{
-			if (_instance == null)
-			{
-				guardFlag = true;
-				_instance = new BitmapCache();
-				guardFlag = false;
-			}
-			
-			return _instance;
-		}
-		
-		
-		
 		private var cache:Object = new Object();
 		
-		public function BitmapCache()
+		public function BitmapCache(lock:Class)
 		{
-			if (!guardFlag)
+			if (lock != SingletonLock)
 				throw new IllegalOperationError("You should not instantiate a Singleton Class");
 				
 		}
@@ -59,7 +43,14 @@ package spica.core
 				
 			return cache[ id ];
 		}
+
+		
+		
+		private static var _instance:BitmapCache = new BitmapCache(SingletonLock);
+		public static function get instance():BitmapCache { return _instance; }
 		
 	}
 
 }
+
+class SingletonLock { }

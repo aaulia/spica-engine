@@ -10,28 +10,13 @@ package spica.math
 		public static const DEG_TO_RAD:Number =  0.017453292519943295769236907684886;
 		public static const RAD_TO_DEG:Number = 57.295779513082320876798154814105;
 		
-		private static var guardFlag:Boolean = false;
-		private static var _instance:MathLUT = null;
-		public static function get instance():MathLUT
+		
+		public const sin:Vector.<Number> = new Vector.<Number>(2880, true);
+		public const cos:Vector.<Number> = new Vector.<Number>(2880, true);
+		
+		public function MathLUT(lock:Class)
 		{
-			if (_instance == null)
-			{
-				guardFlag = true;
-				_instance = new MathLUT();
-				guardFlag = false;
-			}
-			
-			return _instance;
-		}
-		
-		
-		
-		public var sin:Vector.<Number> = new Vector.<Number>(2880, true);
-		public var cos:Vector.<Number> = new Vector.<Number>(2880, true);
-		
-		public function MathLUT()
-		{
-			if (!guardFlag)
+			if (lock != SingletonLock)
 				throw new IllegalOperationError("You should not instantiate a Singleton Class");
 			
 			var angle:Number = 0.0;
@@ -43,7 +28,13 @@ package spica.math
 			}
 		
 		}
+
+		
+		private static const _instance:MathLUT = new MathLUT(SingletonLock);
+		public static function get instance():MathLUT { return _instance; }
 		
 	}
 
 }
+
+class SingletonLock { }
