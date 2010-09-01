@@ -10,19 +10,23 @@ package spica.core
 	{
 		private var replace:Function  = null;
 		
+		
 		protected var src :BitmapData = null;
 		protected var dst :BitmapData = null;
 		protected var next:Scene      = null;
+		
 		
 		public function SceneTransition(dst:Scene)
 		{
 			this.next = dst;
 		}
 		
+		
 		public function transition(elapsed:Number):Boolean
 		{
 			return true;
 		}
+		
 		
 		internal function setup(game:Game, replace:Function):void
 		{
@@ -36,6 +40,7 @@ package spica.core
 			next.initiate();
 			next.render(new RenderContext(dst, camera));
 		}
+		
 		
 		override public function update(elapsed:Number):void
 		{

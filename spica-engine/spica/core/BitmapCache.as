@@ -13,6 +13,7 @@ package spica.core
 	{
 		private var cache:Object = new Object();
 		
+		
 		public function BitmapCache(lock:Class)
 		{
 			if (lock != SingletonLock)
@@ -20,6 +21,7 @@ package spica.core
 				
 		}
 
+		
 		public function clear():void
 		{
 			for each(var bitmapData:BitmapData in cache)
@@ -28,6 +30,7 @@ package spica.core
 			
 			cache = new Object();
 		}
+		
 		
 		public function getBitmap(linkage:Class):BitmapData
 		{

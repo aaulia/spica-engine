@@ -22,6 +22,7 @@ package spica.core
 		private var _buffer:BitmapData = null;
 		private var _scale :Number     = 1.0;
 		
+		
 		public function VideoDriver(stage:Stage, width:int, height:int, fps:int, scale:Number)
 		{
 			this._stage  = stage;
@@ -31,6 +32,7 @@ package spica.core
 			this._scale  = scale;
 		}
 		
+		
 		public function get stage() :Stage      { return _stage;  }
 		public function get width() :int        { return _width;  }
 		public function get height():int        { return _height; }
@@ -39,12 +41,14 @@ package spica.core
 		public function get bitmap():Bitmap     { return _bitmap; }
 		public function get scale() :Number     { return _scale;  }
 		
+		
 		public function set fps(value:int):void
 		{
 			if (_fps != value)
 				_fps  = _stage.frameRate = value;
 		}
-				
+			
+		
 		internal function initiate():void
 		{
 			_stage.displayState = StageDisplayState.NORMAL;
@@ -61,6 +65,7 @@ package spica.core
 			
 			_stage.addChild(_bitmap);
 		}
+		
 		
 		internal function shutdown():void
 		{

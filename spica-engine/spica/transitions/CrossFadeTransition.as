@@ -15,10 +15,12 @@ package spica.transitions
 		private var ctSrc:ColorTransform = null;
 		private var ctDst:ColorTransform = null;
 		
+		
 		public function CrossFadeTransition(dst:Scene)
 		{
 			super(dst);
 		}
+		
 		
 		override public function initiate():void
 		{
@@ -26,6 +28,7 @@ package spica.transitions
 			ctDst = new ColorTransform(1, 1, 1, 0);
 		}
 	
+		
 		override public function transition(elapsed:Number):Boolean
 		{
 			ctSrc.alphaMultiplier -= elapsed;
@@ -34,6 +37,7 @@ package spica.transitions
 			return ctSrc.alphaMultiplier <= 0.0
 				&& ctDst.alphaMultiplier >= 1.0;
 		}
+		
 		
 		override public function render(render:RenderContext):void
 		{

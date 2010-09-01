@@ -14,8 +14,10 @@ package spica.shaders
 	{
 		public  var radius:int               = 2;
 		
+		
 		private var rgbCh :BitmapData        = null;
 		private var point :Point             = null;
+		
 		
 		public function RGBShiftShader(width:int, height:int, radius:int = 2)
 		{
@@ -23,6 +25,7 @@ package spica.shaders
 			this.point  = new Point();
 			this.radius = radius;
 		}
+		
 		
 		override public function postRender(source:BitmapData):void
 		{
@@ -42,6 +45,7 @@ package spica.shaders
 			source.copyPixels(rgbCh, rgbCh.rect, point);
 		}
 		
+		
 		override public function shutdown():void
 		{
 			rgbCh.dispose();
@@ -49,6 +53,7 @@ package spica.shaders
 			rgbCh = null;
 			point = null;
 		}
+		
 	}
 
 }

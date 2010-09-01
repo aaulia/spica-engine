@@ -23,13 +23,14 @@ package spica.utilities
 		}
 		
 		
-		
 		private var cache:Object       = new Object();
 		private var id   :String       = "";
 		private var SO   :SharedObject = null;
 		
+		
 		public function get active  ():SharedObject { return SO; }
 		public function get activeId():String       { return id; }
+		
 		
 		public function SOCache() 
 		{
@@ -38,11 +39,13 @@ package spica.utilities
 				
 		}
 		
+		
 		public function setup(id:String):void 
 		{
 			this.id = id;
 			this.SO = cache[ id ] = SharedObject.getLocal(id);
 		}
+		
 		
 		public function setTo(id:String):Boolean
 		{
@@ -55,6 +58,7 @@ package spica.utilities
 			
 			return false;
 		}
+		
 		
 		public function apply():Boolean
 		{

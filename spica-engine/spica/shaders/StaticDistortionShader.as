@@ -17,6 +17,7 @@ package spica.shaders
 		private var point :Point                 = null;
 		private var filter:DisplacementMapFilter = null;
 		
+		
 		public function StaticDistortionShader(width:int, height:int)
 		{
 			point  = new Point();
@@ -30,6 +31,7 @@ package spica.shaders
 			filter = new DisplacementMapFilter(buffer, point, 1, 0, 5, 0);
 		}
 		
+		
 		public function refresh():void
 		{
 			if (isActive == false)
@@ -38,10 +40,12 @@ package spica.shaders
 			filter.scaleX = Math.random() * 10;
 		}
 		
+		
 		override public function postRender(source:BitmapData):void
 		{
 			source.applyFilter(source, source.rect, point, filter);
 		}
+		
 		
 		override public function shutdown():void
 		{

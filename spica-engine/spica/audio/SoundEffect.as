@@ -13,10 +13,12 @@ package spica.audio
 		private var sound   :Sound    = null;
 		private var onFinish:Function = null;
 		
+		
 		public function SoundEffect(linkage:Class)
 		{
 			loadSound(linkage);
 		}
+		
 		
 		public function loadSound(linkage:Class):SoundEffect
 		{
@@ -24,12 +26,14 @@ package spica.audio
 			return this;
 		}
 		
+		
 		public function play(onFinish:Function = null):void
 		{
 			this.onFinish = onFinish;
 			sound.play()
 			     .addEventListener(Event.SOUND_COMPLETE, onSoundFinish);
 		}
+		
 		
 		private function onSoundFinish(e:Event):void
 		{

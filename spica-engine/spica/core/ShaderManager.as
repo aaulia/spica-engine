@@ -9,10 +9,12 @@ package spica.core
 	{
 		private var shaders:Vector.<Shader> = null;
 		
+		
 		public function ShaderManager()
 		{
 			shaders = new Vector.<Shader>();
 		}
+		
 		
 		public function push(shader:Shader):ShaderManager
 		{
@@ -20,10 +22,12 @@ package spica.core
 			return this;
 		}
 		
+		
 		public function pop():Shader
 		{
 			return shaders.pop();
 		}
+		
 		
 		public function preRender(render:RenderContext):void
 		{
@@ -40,6 +44,7 @@ package spica.core
 				
 		}
 		
+		
 		public function postRender(render:RenderContext):void
 		{
 			var buffer:BitmapData = render.buffer;
@@ -54,6 +59,7 @@ package spica.core
 			}
 			
 		}
+		
 		
 		public function shutdown():void
 		{

@@ -9,6 +9,7 @@ package spica.core
 	{
 		public var isActive:Boolean = true;
 		
+		
 		public function preRender (source:BitmapData):void { }
 		public function postRender(source:BitmapData):void { }
 		public function shutdown  ()                 :void { }

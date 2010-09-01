@@ -9,16 +9,17 @@ package spica.core
 		public function initiate():void { }
 		public function shutdown():void { }
 		
+		
 		public function update(elapsed:Number)      :void { }
 		public function render(render:RenderContext):void { }
 
-		
 		
 		protected var video :VideoDriver   = null;
 		protected var audio :AudioDriver   = null;
 		protected var input :InputDriver   = null;
 		protected var scene :SceneManager  = null;
 		protected var camera:Camera        = null;
+		
 		
 		internal function injectDependency(game:Game):void
 		{

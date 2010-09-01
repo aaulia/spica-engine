@@ -14,6 +14,7 @@ package spica.math
 		public const sin:Vector.<Number> = new Vector.<Number>(2880, true);
 		public const cos:Vector.<Number> = new Vector.<Number>(2880, true);
 		
+		
 		public function MathLUT(lock:Class)
 		{
 			if (lock != SingletonLock)

@@ -16,16 +16,20 @@ package spica.transitions
 		private const SCENE_ENTER:int =  1;
 		private const SCENE_ENDED:int =  2;
 		
+		
 		private const DOUBLE_PI:Number = Math.PI * 2;
+		
 		
 		private var matrix:Matrix = null;
 		private var scale :Number = 0.0;
 		private var state :int    = SCENE_ERROR;
 		
+		
 		public function RotoZoomTransition(dst:Scene)
 		{
 			super(dst);
 		}
+		
 		
 		override public function initiate():void
 		{
@@ -33,6 +37,7 @@ package spica.transitions
 			scale  = 1.0;
 			state  = SCENE_LEAVE;
 		}
+		
 		
 		private function updateTransform(scale:Number, angle:Number):void
 		{
@@ -44,6 +49,7 @@ package spica.transitions
 			
 			video.bitmap.transform.matrix = matrix;
 		}
+		
 		
 		override public function transition(elapsed:Number):Boolean
 		{

@@ -10,11 +10,13 @@ package spica.core
 		private const SAMPLE_COUNT:int   = 8;
 		private const SAMPLE_INDEX:int   = SAMPLE_COUNT - 1;
 		
+		
 		private var fps    :int          = 0;
 		private var elapse :int          = 0;
 		private var current:int          = 0;
 		private var samples:Vector.<int> = null;
 		private var average:int          = 0;
+		
 		
 		public function TimerManager(fps:int)
 		{
@@ -29,15 +31,18 @@ package spica.core
 				
 		}
 		
+		
 		public function get elapsedInt():int
 		{
 			return average;
 		}
 		
+		
 		public function get elapsed():Number
 		{
 			return average * 0.001;
 		}
+		
 		
 		public function update():void
 		{

@@ -13,9 +13,11 @@ package spica.shaders
 	{
 		private const DEFAULT_PATTERN:Array = [ [0.5, 0.5], [0, 0] ];
 		
+		
 		private var scanBuffer:BitmapData = null;
 		private var pattBuffer:BitmapData = null;
 		private var point     :Point      = null;
+		
 		
 		public function ScanLineShader(width:int, height:int, pattern:Array = null)
 		{
@@ -46,11 +48,13 @@ package spica.shaders
 			
 		}
 		
+		
 		override public function postRender(source:BitmapData):void
 		{
 			point.x = point.y = 0;
 			source.copyPixels(scanBuffer, scanBuffer.rect, point, null, null, true);
 		}
+		
 		
 		override public function shutdown():void
 		{

@@ -10,10 +10,12 @@ package spica.core
 		private var scene:Scene = null;
 		private var next :Scene = null;
 		
+		
 		public function SceneManager(game:Game)
 		{
 			this.game = game;
 		}
+		
 		
 		public function goTo(scene:Scene):SceneManager
 		{
@@ -24,6 +26,7 @@ package spica.core
 			return this;
 		}
 		
+		
 		private function onDirectReplace(scene:Scene):void
 		{
 			if (this.scene != null)
@@ -31,6 +34,7 @@ package spica.core
 			
 			this.scene = scene;
 		}
+		
 		
 		private function switchScene():void
 		{
@@ -48,15 +52,18 @@ package spica.core
 			scene.initiate();
 		}
 		
+		
 		internal function update(elapsed:Number):void
 		{
 			scene.update(elapsed);
 		}
 		
+		
 		internal function render(render:RenderContext):void
 		{
 			scene.render(render);
 		}
+		
 		
 		internal function validate():void
 		{
@@ -64,6 +71,7 @@ package spica.core
 				switchScene();
 			
 		}
+		
 		
 		internal function shutdown():void
 		{

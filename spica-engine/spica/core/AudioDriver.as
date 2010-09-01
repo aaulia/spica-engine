@@ -11,17 +11,20 @@ package spica.core
 		private var device :SoundTransform = null;
 		private var _volume:Number         = 0;
 		
+		
 		internal function initiate():void
 		{
 			device  = SoundMixer.soundTransform;
 			_volume = device.volume
 		}
 		
+		
 		internal function shutdown():void
 		{
 			device  = null;
 			_volume = 0;
 		}
+		
 		
 		public function get volume():Number { return _volume; }
 		public function set volume(v:Number):void
@@ -37,6 +40,7 @@ package spica.core
 			
 		}
 		
+		
 		public function get panning():int { return device.pan; }
 		public function set panning(v:int):void
 		{
@@ -51,6 +55,7 @@ package spica.core
 			}
 			
 		}
+		
 		
 		public function get muted():Boolean { return device.volume == 0; }
 		public function set muted(v:Boolean):void

@@ -13,13 +13,16 @@ package spica.core
 	{
 		private var stage    :Stage              = null;
 		
+		
 		private var keyDown  :Vector.<Boolean>   = null;
 		private var keyBtn   :Vector.<int>       = null;
+		
 		
 		private var mouseDown:Boolean            = false;
 		private var _mouseBtn:int                = 0;
 		private var _mouseX  :int                = 0;
 		private var _mouseY  :int                = 0;
+		
 		
 		public function set showDefaultPointer(v:Boolean):void
 		{
@@ -28,14 +31,17 @@ package spica.core
 			: Mouse.hide();
 		}
 		
+		
 		public function InputDriver(stage:Stage)
 		{
 			this.stage = stage;
 		}
 		
+		
 		public function get mouseX()  :int { return _mouseX;   }
 		public function get mouseY()  :int { return _mouseY;   }
 		public function get mouseBtn():int { return _mouseBtn; }
+		
 		
 		public function getKeyState(key:int):int
 		{
@@ -65,10 +71,12 @@ package spica.core
 			_mouseY   = -1;
 		}
 		
+		
 		private function onKeyDown  (e:KeyboardEvent):void { keyDown[ e.keyCode ] = true; }
 		private function onKeyUp    (e:KeyboardEvent):void { keyDown[ e.keyCode ] = false; }
 		private function onMouseDown(e:MouseEvent)   :void { mouseDown = true; }
 		private function onMouseUp  (e:MouseEvent)   :void { mouseDown = false; }
+		
 		
 		internal function update():void
 		{
@@ -101,6 +109,7 @@ package spica.core
 			}
 			
 		}
+		
 		
 		internal function shutdown():void
 		{

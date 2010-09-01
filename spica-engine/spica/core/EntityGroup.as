@@ -9,6 +9,7 @@ package spica.core
 	{
 		public var members:Vector.<Entity> = new Vector.<Entity>();
 		
+		
 		public function add(entity:Entity):Entity
 		{
 			var exist:int = members.indexOf(entity);
@@ -18,6 +19,7 @@ package spica.core
 			return entity;
 		}
 		
+		
 		public function remove(entity:Entity):Entity
 		{
 			var exist:int = members.indexOf(entity);
@@ -26,6 +28,7 @@ package spica.core
 			
 			return entity;
 		}
+		
 		
 		public function getFirstDead():Entity
 		{
@@ -38,6 +41,7 @@ package spica.core
 			
 			return null;
 		}
+		
 		
 		public function get deadCount():int
 		{
@@ -52,6 +56,7 @@ package spica.core
 			return count;
 		}
 		
+		
 		public function get aliveCount():int
 		{
 			var count :int = 0;
@@ -64,6 +69,7 @@ package spica.core
 			
 			return count;
 		}
+		
 		
 		override public function update(elapsed:Number):void
 		{
@@ -78,6 +84,7 @@ package spica.core
 			
 		}
 		
+		
 		override public function render(render:RenderContext):void
 		{
 			var entity:Entity = null;
@@ -90,6 +97,7 @@ package spica.core
 			}
 			
 		}
+		
 		
 		override public function shutdown():void
 		{

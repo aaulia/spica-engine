@@ -51,6 +51,7 @@ package spica.math
 	{
 		private var seed:uint = 0;
 		
+		
 		public function set seed(v:uint):void
 		{
 			seed = (v == 0)
@@ -58,15 +59,18 @@ package spica.math
 				: v;
 		}
 		
+		
 		public function ParkMillerRandom(seed:uint = 0)
 		{
 			this.seed = seed;
 		}
 		
+		
 		public function random():Number
 		{
 			return (seed = (seed * 16807) % 2147483647) / 2147483647;
 		}
+		
 		
 		public function randomInt():uint
 		{

@@ -14,6 +14,7 @@ package spica.shaders
 		private var buffer:BitmapData = null;
 		private var point :Point      = null;
 		
+		
 		public function ClearScreenShader(width:int, height:int, color:uint = 0x00000000)
 		{
 			this.color  = color;
@@ -21,10 +22,12 @@ package spica.shaders
 			this.point  = new Point();
 		}
 		
+		
 		override public function preRender(source:BitmapData):void
 		{
 			source.copyPixels(buffer, buffer.rect, point);
 		}
+		
 		
 		override public function shutdown():void
 		{
@@ -35,6 +38,7 @@ package spica.shaders
 			point  = null;
 			color  = 0x00000000;
 		}
+		
 	}
 
 }

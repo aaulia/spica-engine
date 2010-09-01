@@ -16,20 +16,24 @@ package spica.enum
 		public static const CAPSLOCK :int = 20;
 		public static const ESCAPE   :int = 27;
 		public static const SPACEBAR :int = 32;
-		//---------------------------------------
+
+		
 		public static const PAGEUP   :int = 33;
 		public static const PAGEDOWN :int = 34;
 		public static const END      :int = 35;
 		public static const HOME     :int = 36;
-		//---------------------------------------
+		
+		
 		public static const LEFT     :int = 37;
 		public static const UP       :int = 38;
 		public static const RIGHT    :int = 39;
 		public static const DOWN     :int = 40;
-		//---------------------------------------
+		
+		
 		public static const INSERT   :int = 45;
 		public static const DELETE   :int = 46;
-		//---------------------------------------
+		
+		
 		public static const DIGITS_0 :int = 48;
 		public static const DIGITS_1 :int = 49;
 		public static const DIGITS_2 :int = 50;
@@ -40,7 +44,8 @@ package spica.enum
 		public static const DIGITS_7 :int = 55;
 		public static const DIGITS_8 :int = 56;
 		public static const DIGITS_9 :int = 57;
-		//---------------------------------------
+		
+		
 		public static const A        :int = 65;
 		public static const B        :int = 66;
 		public static const C        :int = 67;
@@ -67,7 +72,8 @@ package spica.enum
 		public static const X        :int = 88;
 		public static const Y        :int = 89;
 		public static const Z        :int = 90;
-		//---------------------------------------
+		
+		
 		public static const NUMPAD_0 :int = 96;
 		public static const NUMPAD_1 :int = 97;
 		public static const NUMPAD_2 :int = 98;
@@ -78,15 +84,15 @@ package spica.enum
 		public static const NUMPAD_7 :int = 103;
 		public static const NUMPAD_8 :int = 104;
 		public static const NUMPAD_9 :int = 105;
-		//---------------------------------------
-		// Symbols on Numpad
-		//---------------------------------------
+		
+		
 		public static const MULTIPLY :int = 106;
 		public static const ADD      :int = 107;
 		public static const SUBSTRACT:int = 109;
 		public static const DECIMAL  :int = 110;
 		public static const DIVIDE   :int = 111;
-		//---------------------------------------
+		
+		
 		public static const F1       :int = 112;
 		public static const F2       :int = 113;
 		public static const F3       :int = 114;
@@ -101,10 +107,12 @@ package spica.enum
 		public static const F13      :int = 124;
 		public static const F14      :int = 125;
 		public static const F15      :int = 126;
-		//---------------------------------------
+		
+		
 		public static const NUMLOCK  :int = 144;
 		public static const SCRLOCK  :int = 145;
-		//---------------------------------------
+		
+		
 		public static const COMMA    :int = 188;
 		public static const DASH     :int = 189;
 		public static const DOT      :int = 190;
@@ -112,6 +120,7 @@ package spica.enum
 		public static const TILDE    :int = 192;
 		public static const BACKSLASH:int = 220;
 		public static const QUOTE    :int = 222;
+		
 	}
 
 }

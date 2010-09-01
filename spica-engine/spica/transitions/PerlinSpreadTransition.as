@@ -16,10 +16,12 @@ package spica.transitions
 		private var perlin   :BitmapData = null;
 		private var point    :Point      = null;
 
+		
 		private var threshold:uint       = 0;
 		private var baseX    :Number     = 0;
 		private var baseY    :Number     = 0;
 		private var nOctave  :uint       = 0;
+		
 		
 		public function PerlinSpreadTransition(
 			dst    :Scene,
@@ -34,6 +36,7 @@ package spica.transitions
 			this.nOctave = nOctave;
 		}
 		
+		
 		override public function initiate():void
 		{
 			threshold = 0;
@@ -43,6 +46,7 @@ package spica.transitions
 			perlin.perlinNoise(baseX, baseY, nOctave, getTimer(), false, true, 0, true);
 		}
 		
+		
 		override public function transition(elapsed:Number):Boolean
 		{
 			threshold += (0xFFFFFF - threshold) * elapsed;
@@ -50,11 +54,13 @@ package spica.transitions
 			return threshold >= 0xDFFFFF;
 		}
 		
+		
 		override public function render(render:RenderContext):void
 		{
 			render.buffer.copyPixels(dst, dst.rect, point);
 			render.buffer.copyPixels(src, src.rect, point, perlin, null, true);
 		}
+		
 		
 		override public function shutdown():void
 		{

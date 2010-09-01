@@ -16,7 +16,9 @@ package spica.audio
 		private var transform:SoundTransform = null;
 		private var position :int            = 0;
 		
+		
 		public function get isPlaying():Boolean { return channel != null; }
+		
 		
 		public function get volume():Number { return transform.volume; }
 		public function set volume(v:Number):void
@@ -30,6 +32,7 @@ package spica.audio
 			}
 			
 		}
+		
 		
 		public function get pan():Number { return transform.pan; }
 		public function set pan(v:Number):void
@@ -53,6 +56,7 @@ package spica.audio
 			position  = 0;
 		}
 		
+		
 		public function loadMusic(linkage:Class):Music
 		{
 			if (channel != null)
@@ -64,6 +68,7 @@ package spica.audio
 			
 			return this;
 		}
+		
 		
 		public function play(reset:Boolean = true):void
 		{
@@ -85,6 +90,7 @@ package spica.audio
 			
 		}
 		
+		
 		private function onSoundComplete(e:Event):void
 		{
 			channel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
@@ -94,6 +100,7 @@ package spica.audio
 			
 			channel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
 		}
+		
 		
 		public function stop():void
 		{
@@ -106,6 +113,7 @@ package spica.audio
 			
 			position = 0;
 		}
+		
 		
 		public function pause():void
 		{

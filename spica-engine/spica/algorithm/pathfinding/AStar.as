@@ -22,6 +22,7 @@ package spica.algorithm.pathfinding
 			initialize(map, width, height);
 		}
 		
+		
 		public function initialize(map:Vector.<int>, width:int, height:int = 0):void
 		{
 			this.map    = map.concat();
@@ -34,6 +35,7 @@ package spica.algorithm.pathfinding
 					nodes[ x + y * width ] = new Node(x, y);
 			
 		}
+		
 		
 		public function searchPath(
 			from    :Point,
@@ -151,10 +153,12 @@ package spica.algorithm.pathfinding
 			return result;
 		}
 		
+		
 		private function sortH(a:Node, b:Node):int
 		{
 			return a.H - b.H;
 		}
+		
 		
 		private function sortF(a:Node, b:Node):int
 		{
@@ -174,13 +178,16 @@ class Node
 	public var H   :int  = 0;
 	public var F   :int  = 0;
 	
+	
 	public var x   :int  = 0;
 	public var y   :int  = 0;
+	
 	
 	public function Node(x:int, y:int)
 	{
 		initialize(x, y);
 	}
+	
 	
 	public function initialize(x:int, y:int):void
 	{
@@ -189,6 +196,7 @@ class Node
 
 		reset();
 	}
+	
 	
 	public function reset():void
 	{

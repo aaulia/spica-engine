@@ -12,20 +12,26 @@ package spica.core
 		public  var audio :AudioDriver   = null;
 		public  var input :InputDriver   = null;
 		
+		
 		public  var camera:Camera        = null;
 		public  var scene :SceneManager  = null;
+		
 		
 		private var stage :Stage         = null;
 		private var timer :TimerManager  = null;
 		private var render:RenderContext = null;
 		
+		
 		private var elapse:int           = 0;
 		private var slice :int           = 0;
+		private var sliceF:Number        = 0.0;
+		
 		
 		public function Game(stage:Stage)
 		{
 			this.stage = stage;
 		}
+		
 		
 		public function initiate(width:int, height:int, fps:int, scale:Number):Game
 		{
@@ -44,36 +50,20 @@ package spica.core
 			
 			elapse = 0;
 			slice  = int(1000.0 / fps + 0.5);
+			sliceF = 1 / fps;
 			
 			return this;
 		}
 		
-		public function run(entryPoint:Scene, fixedRate:Boolean = false):Game
+		
+		public function run(entryPoint:Scene):Game
 		{
 			scene.goTo(entryPoint);
-			if (fixedRate)
-				stage.addEventListener(Event.ENTER_FRAME, doFixedRateTick);
-			else 
-				stage.addEventListener(Event.ENTER_FRAME, doTimeBasedTick);
+			stage.addEventListener(Event.ENTER_FRAME, doTimeBasedTick);
 			
 			return this;
 		}
 		
-		private function doFixedRateTick(e:Event):void 
-		{
-			input.update();
-			timer.update();
-			
-			elapse += timer.elapsedInt;
-			if (elapse > slice)
-			{
-				scene.update(int(elapse / slice));
-				elapse %= slice;
-			}
-			
-			scene.render(render);
-			scene.validate();
-		}
 		
 		private function doTimeBasedTick(e:Event):void
 		{
@@ -84,6 +74,7 @@ package spica.core
 			scene.render(render);
 			scene.validate();
 		}
+		
 		
 		public function shutdown():void
 		{

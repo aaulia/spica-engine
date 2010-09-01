@@ -20,6 +20,7 @@ package spica.transitions
 		private const SCENE_ENTER:int =  1;
 		private const SCENE_ENDED:int =  2;
 		
+		
 		private var timer      :Number                = 0.0;
 		private var state      :int                   = SCENE_ERROR;
 		private var filter     :DisplacementMapFilter = null;
@@ -29,12 +30,14 @@ package spica.transitions
 		private var split      :int                   = 0;
 		private var orientation:int                   = 0;
 		
+		
 		public function VerticalSplitColumnTransition(dst:Scene, split:int = 3, orientation:int = 0)
 		{
 			super(dst);
 			this.split       = split;
 			this.orientation = orientation;
 		}
+		
 		
 		override public function initiate():void
 		{
@@ -70,6 +73,7 @@ package spica.transitions
 			state = SCENE_LEAVE;
 		}
 		
+		
 		override public function shutdown():void
 		{
 			map.dispose();
@@ -77,6 +81,7 @@ package spica.transitions
 			filter = null;
 			map    = null;
 		}
+		
 		
 		private function updateFilter(v:Number):void
 		{
@@ -86,6 +91,7 @@ package spica.transitions
 			
 			video.bitmap.filters = [ filter ];
 		}
+		
 		
 		override public function transition(elapsed:Number):Boolean
 		{

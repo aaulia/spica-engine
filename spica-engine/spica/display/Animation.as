@@ -16,13 +16,15 @@ package spica.display
 		private var timer    :Number            = 0;
 		private var loop     :int               = -1;
 		private var onFinish :Function          = null;
-				
-		public function Animation(linkage:Class, width:int, height:int)
+			
+		
+		public function Animation(linkage:Class = null, width:int = 0, height:int = 0)
 		{
 			sprite    = new Sprite(linkage, width, height);
 			sequences = new Vector.<Sequence>();
 			isActive  = false;
 		}
+		
 		
 		public function loadBitmap(linkage:Class, width:int, height:int):Animation
 		{
@@ -32,14 +34,17 @@ package spica.display
 			return this;
 		}
 		
+		
 		override public function get width ():int { return sprite.width;  }
 		override public function get height():int { return sprite.height; }
+		
 		
 		public function addSequence(name:String, indexes:Array, fps:int):Animation
 		{
 			sequences.push(new Sequence(name, indexes, fps));
 			return this;
 		}
+		
 		
 		public function play(name:String = "", loop:int = -1, onFinish:Function = null):Animation
 		{
@@ -54,6 +59,7 @@ package spica.display
 			return this;
 		}
 		
+		
 		public function stop():Animation
 		{
 			frmIndex  = 0;
@@ -64,11 +70,13 @@ package spica.display
 			return this;
 		}
 		
+		
 		public function pause():Animation
 		{
  			isActive = false;
 			return this;
 		}
+		
 		
 		public function clearSequences():Animation
 		{
@@ -78,12 +86,14 @@ package spica.display
 			return this;
 		}
 		
+		
 		public function get sequenceName():String
 		{
 			return seqIndex >= 0
 				? sequences[ seqIndex ].name
 				: "";
 		}
+		
 		
 		private function getSequenceIndex(name:String):int
 		{
@@ -94,6 +104,7 @@ package spica.display
 			
 			return -1;
 		}
+		
 		
 		override public function render(render:RenderContext):void
 		{
@@ -110,6 +121,7 @@ package spica.display
 			sprite.render(render);
 		}
 
+		
 		override public function update(elapsed:Number):void
 		{
 			if (seqIndex == -1)
@@ -138,6 +150,7 @@ package spica.display
 			frmIndex %= seqLength;
 		}
 		
+		
 		override public function shutdown():void
 		{
 			sprite.shutdown();
@@ -160,6 +173,7 @@ class Sequence
 	public var indexes:Array  = [];
 	public var delay  :Number = 0;
 	public var length :int    = 0;
+	
 	
 	public function Sequence(name:String, indexes:Array, fps:int)
 	{

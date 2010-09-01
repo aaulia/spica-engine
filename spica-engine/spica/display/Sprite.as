@@ -18,14 +18,19 @@ package spica.display
 		private var _height:int                = -1;
 		private var _width :int                = -1;
 		
+		
 		private var bitmap :BitmapData         = null;
 		private var frames :Vector.<Rectangle> = null;
 		private var point  :Point              = new Point();
 		
-		public function Sprite(linkage:Class, width:int = 0, height:int = 0)
+		
+		public function Sprite(linkage:Class = null, width:int = 0, height:int = 0)
 		{
-			loadBitmap(linkage, width, height);
+			if (linkage != null)
+				loadBitmap(linkage, width, height);
+				
 		}
+		
 		
 		public function loadBitmap(linkage:Class, width:int, height:int):Sprite
 		{
@@ -46,16 +51,20 @@ package spica.display
 			return this;
 		}
 		
+		
 		override public function get width ():int  { return _width;  }
 		override public function get height():int  { return _height; }
 		
+		
 		public function get frameCount():int  { return frames.length; }
 		public function get frame()     :int  { return _frame; }
+		
 		
 		public function set frame(f:int):void
 		{
 			_frame = f % frames.length;
 		}
+		
 		
 		override public function render(render:RenderContext):void
 		{
@@ -81,6 +90,7 @@ package spica.display
 			
 			buffer.copyPixels(bitmap, frames[ _frame ], point, null, null, true);
 		}
+		
 		
 		override public function shutdown():void
 		{

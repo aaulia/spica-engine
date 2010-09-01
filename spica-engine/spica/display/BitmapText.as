@@ -19,9 +19,11 @@ package spica.display
 		private var font     :Sprite       = null;
 		private var charMap  :Object       = null;
 		
+		
 		private var point    :Point        = null;
 		private var index    :Vector.<int> = null;
 		private var length   :int          = 0;
+		
 		
 		private var _text    :String       = "";
 		private var _width   :int          = 0;
@@ -41,6 +43,7 @@ package spica.display
 				charMap[ dict.charAt(i) ] = i;
 		
 		}
+		
 		
 		public function get text():String { return _text; }
 		public function set text(v:String):void 
