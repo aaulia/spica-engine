@@ -22,9 +22,6 @@ package spica.core
 		private var render:RenderContext = null;
 		
 		
-		private var elapse:int           = 0;
-		
-		
 		public function Game(stage:Stage)
 		{
 			this.stage = stage;
