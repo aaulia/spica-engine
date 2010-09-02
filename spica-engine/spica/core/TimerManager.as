@@ -32,12 +32,6 @@ package spica.core
 		}
 		
 		
-		public function get elapsedInt():int
-		{
-			return average;
-		}
-		
-		
 		public function get elapsed():Number
 		{
 			return average * 0.001;

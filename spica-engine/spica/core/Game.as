@@ -23,8 +23,6 @@ package spica.core
 		
 		
 		private var elapse:int           = 0;
-		private var slice :int           = 0;
-		private var sliceF:Number        = 0.0;
 		
 		
 		public function Game(stage:Stage)
@@ -49,8 +47,6 @@ package spica.core
 			render = new RenderContext(video.buffer, camera);
 			
 			elapse = 0;
-			slice  = int(1000.0 / fps + 0.5);
-			sliceF = 1 / fps;
 			
 			return this;
 		}
@@ -59,13 +55,13 @@ package spica.core
 		public function run(entryPoint:Scene):Game
 		{
 			scene.goTo(entryPoint);
-			stage.addEventListener(Event.ENTER_FRAME, doTimeBasedTick);
+			stage.addEventListener(Event.ENTER_FRAME, update);
 			
 			return this;
 		}
 		
 		
-		private function doTimeBasedTick(e:Event):void
+		private function update(e:Event):void
 		{
 			input.update();
 			timer.update();
