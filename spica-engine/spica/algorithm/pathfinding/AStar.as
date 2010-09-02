@@ -30,8 +30,8 @@ package spica.algorithm.pathfinding
 			this.height = (height == 0 ? map.length / width : height);
 			this.nodes  = new Vector.<Node>();
 			
-			for (var y:int = 0; y < height; ++y)
-				for (var x:int = 0; x < width; ++x)
+			for (var y:int = 0; y < this.height; ++y)
+				for (var x:int = 0; x < this.width; ++x)
 					nodes[ x + y * width ] = new Node(x, y);
 			
 		}
