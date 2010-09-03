@@ -2,12 +2,16 @@ package spica.core
 {
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.utils.getTimer;
 	/**
 	 * ...
 	 * @author Achmad Aulia Noorhakim
 	 */
 	public class Game
 	{
+		private static const MAX_DELTA:int = 33;
+		
+		
 		public  var video :VideoDriver   = null;
 		public  var audio :AudioDriver   = null;
 		public  var input :InputDriver   = null;
@@ -18,7 +22,6 @@ package spica.core
 		
 		
 		private var stage :Stage         = null;
-		private var timer :TimerManager  = null;
 		private var render:RenderContext = null;
 		
 		
@@ -39,20 +42,24 @@ package spica.core
 			input.initiate();
 			
 			scene  = new SceneManager(this);
-			timer  = new TimerManager(fps);
 			camera = new Camera(width, height);
 			render = new RenderContext(video.buffer, camera);
-			
-			elapse = 0;
 			
 			return this;
 		}
 		
 		
+		private var old:int = 0;
+		private var now:int = 0;
+		private var dt :int = 0;
+
+		
 		public function run(entryPoint:Scene):Game
 		{
 			scene.goTo(entryPoint);
 			stage.addEventListener(Event.ENTER_FRAME, update);
+		
+			old = getTimer();
 			
 			return this;
 		}
@@ -61,9 +68,15 @@ package spica.core
 		private function update(e:Event):void
 		{
 			input.update();
-			timer.update();
 			
-			scene.update(timer.elapsed);
+			now = getTimer();
+			dt  = now - old;
+			old = now;
+			
+			if (dt > MAX_DELTA)
+				dt = MAX_DELTA;
+				
+			scene.update(dt * 0.001);
 			scene.render(render);
 			scene.validate();
 		}
