@@ -1,4 +1,4 @@
-package spica.utilities 
+package spica.utilities
 {
 	import flash.errors.IllegalOperationError;
 	import flash.net.SharedObject;
@@ -8,21 +8,6 @@ package spica.utilities
 	 */
 	public final class SOCache
 	{
-		private static var guardFlag:Boolean = false;
-		private static var _instance:SOCache = null;
-		public static function get instance():SOCache
-		{
-			if (_instance == null)
-			{
-				guardFlag = false;
-				_instance = new SOCache();
-				guardFlag = true;
-			}
-			
-			return _instance;
-		}
-		
-		
 		private var cache:Object       = new Object();
 		private var id   :String       = "";
 		private var SO   :SharedObject = null;
@@ -32,15 +17,15 @@ package spica.utilities
 		public function get activeId():String       { return id; }
 		
 		
-		public function SOCache() 
+		public function SOCache(lock:Class)
 		{
-			if (!guardFlag)
+			if (lock != SingletonLock)
 				throw new IllegalOperationError("You should not instantiate a Singleton Class");
 				
 		}
 		
 		
-		public function setup(id:String):void 
+		public function setup(id:String):void
 		{
 			this.id = id;
 			this.SO = cache[ id ] = SharedObject.getLocal(id);
@@ -71,6 +56,15 @@ package spica.utilities
 			return false;
 		}
 		
+		
+		private static const _instance:SOCache = new SOCache(SingletonLock);
+		public static function get instance():SOCache
+		{
+			return _instance;
+		}
+		
 	}
 
 }
+
+class SingletonLock { }
