@@ -66,10 +66,10 @@ package spica.display
 		}
 		
 		
-		override public function render(render:RenderContext):void
+		override public function render(context:RenderContext):void
 		{
-			var camera:Camera     = render.camera;
-			var buffer:BitmapData = render.buffer;
+			var camera:Camera     = context.camera;
+			var buffer:BitmapData = context.buffer;
 			
 			if (scroll != 0 && camera != null)
 			{

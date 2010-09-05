@@ -11,9 +11,10 @@ package spica.core
 		public var isVisible:Boolean = true;
 		
 		
-		public function update(elapsed:Number)      :void { }
-		public function render(render:RenderContext):void { }
-		public function shutdown()                  :void { }
+		public function onTick  ()                     :void { }
+		public function update  (elapsed:Number)       :void { }
+		public function render  (context:RenderContext):void { }
+		public function shutdown()                     :void { }
 		
 	}
 

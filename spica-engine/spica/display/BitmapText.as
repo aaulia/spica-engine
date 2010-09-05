@@ -1,4 +1,4 @@
-package spica.display 
+package spica.display
 {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
@@ -30,7 +30,7 @@ package spica.display
 		private var _height  :int          = 0;
 		
 		
-		public function BitmapText(linkage:Class, width:int, height:int, dict:String) 
+		public function BitmapText(linkage:Class, width:int, height:int, dict:String)
 		{
 			super();
 			
@@ -46,7 +46,7 @@ package spica.display
 		
 		
 		public function get text():String { return _text; }
-		public function set text(v:String):void 
+		public function set text(v:String):void
 		{
 			if (_text == v)
 				return;
@@ -74,10 +74,10 @@ package spica.display
 		override public function get height():int { return _height; }
 		
 		
-		override public function render(render:RenderContext):void 
+		override public function render(context:RenderContext):void
 		{
-			var camera:Camera     = render.camera;
-			var buffer:BitmapData = render.buffer;
+			var camera:Camera     = context.camera;
+			var buffer:BitmapData = context.buffer;
 			
 			if (scroll != 0 && camera != null)
 			{
@@ -105,14 +105,14 @@ package spica.display
 				{
 					case SPACE  : font.x += font.width;     break;
 					case TAB    : font.x += font.width * 4; break;
-					case NEWLINE: 
+					case NEWLINE:
 					{
-						font.y += font.height; 
+						font.y += font.height;
 						font.x  = point.x;
 						break;
 					}
 					
-					default     : 
+					default     :
 					{
 						if (c >= 0)
 						{

@@ -37,6 +37,7 @@ package spica.core
 			{
 				if (!members[ i ].isAlive)
 					return members[ i ];
+					
 			}
 			
 			return null;
@@ -51,6 +52,7 @@ package spica.core
 			{
 				if (!members[ i ].isAlive)
 					++count;
+					
 			}
 			
 			return count;
@@ -65,9 +67,25 @@ package spica.core
 			{
 				if (members[ i ].isAlive)
 					++count;
+					
 			}
 			
 			return count;
+		}
+		
+		
+		override public function onTick():void
+		{
+			var entity:Entity = null;
+			var length:int    = members.length;
+			for (var i:int = 0; i < length; ++i)
+			{
+				entity = members[ i ];
+				if (entity.isAlive && entity.isActive)
+					entity.onTick();
+					
+			}
+			
 		}
 		
 		
@@ -80,12 +98,13 @@ package spica.core
 				entity = members[ i ];
 				if (entity.isAlive && entity.isActive)
 					entity.update(elapsed);
+					
 			}
 			
 		}
 		
 		
-		override public function render(render:RenderContext):void
+		override public function render(context:RenderContext):void
 		{
 			var entity:Entity = null;
 			var length:int    = members.length;
@@ -93,7 +112,8 @@ package spica.core
 			{
 				entity = members[ i ];
 				if (entity.isAlive && entity.isVisible)
-					entity.render(render);
+					entity.render(context);
+					
 			}
 			
 		}

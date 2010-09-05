@@ -8,7 +8,7 @@ package spica.display
 	 * @author Achmad Aulia Noorhakim
 	 */
 	public class Animation extends Visual
-	{		
+	{
 		private var sprite   :Sprite            = null;
 		private var sequences:Vector.<Sequence> = null;
 		private var seqIndex :int               = -1;
@@ -106,7 +106,7 @@ package spica.display
 		}
 		
 		
-		override public function render(render:RenderContext):void
+		override public function render(context:RenderContext):void
 		{
 			if (seqIndex < 0)
 				return;
@@ -118,7 +118,7 @@ package spica.display
 			sprite.scroll  = scroll;
 			sprite.frame   = sequences[ seqIndex ].indexes[ frmIndex ];
 			
-			sprite.render(render);
+			sprite.render(context);
 		}
 
 		

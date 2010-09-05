@@ -9,20 +9,17 @@ package spica.core
 	 */
 	public class Game
 	{
-		private static const MAX_DELTA:int = 33;
+		public  var video  :VideoDriver   = null;
+		public  var audio  :AudioDriver   = null;
+		public  var input  :InputDriver   = null;
 		
 		
-		public  var video :VideoDriver   = null;
-		public  var audio :AudioDriver   = null;
-		public  var input :InputDriver   = null;
+		public  var camera :Camera        = null;
+		public  var scene  :SceneManager  = null;
 		
 		
-		public  var camera:Camera        = null;
-		public  var scene :SceneManager  = null;
-		
-		
-		private var stage :Stage         = null;
-		private var render:RenderContext = null;
+		private var stage  :Stage         = null;
+		private var context:RenderContext = null;
 		
 		
 		public function Game(stage:Stage)
@@ -33,25 +30,31 @@ package spica.core
 		
 		public function initiate(width:int, height:int, fps:int, scale:Number):Game
 		{
-			video  = new VideoDriver(stage, width, height, fps, scale);
-			audio  = new AudioDriver();
-			input  = new InputDriver(stage);
+			video   = new VideoDriver(stage, width, height, fps, scale);
+			audio   = new AudioDriver();
+			input   = new InputDriver(stage);
 			
 			video.initiate();
 			audio.initiate();
 			input.initiate();
 			
-			scene  = new SceneManager(this);
-			camera = new Camera(width, height);
-			render = new RenderContext(video.buffer, camera);
+			scene   = new SceneManager(this);
+			camera  = new Camera(width, height);
+			context = new RenderContext(video.buffer, camera);
 			
 			return this;
 		}
 		
 		
+		private const MAX_DELTA:int = 33;	// maximum dt is 33 ~ 30 frame per second
+		private const GAME_TICK:int = 16;	// defaulting to 60-ish frame per second :-/
+		
+		
 		private var old:int = 0;
 		private var now:int = 0;
-		private var dt :int = 0;
+		private var acc:int = 0;	// accumulator
+		private var frm:int = 0;	// frame time (under ideal situation, this is == dt)
+		private var dt :int = 0;	// delta time
 
 		
 		public function run(entryPoint:Scene):Game
@@ -67,8 +70,6 @@ package spica.core
 		
 		private function update(e:Event):void
 		{
-			input.update();
-			
 			now = getTimer();
 			dt  = now - old;
 			old = now;
@@ -76,8 +77,22 @@ package spica.core
 			if (dt > MAX_DELTA)
 				dt = MAX_DELTA;
 				
-			scene.update(dt * 0.001);
-			scene.render(render);
+			acc += dt;
+			frm  = 0;
+			while (acc >= GAME_TICK)
+			{
+				scene.onTick();
+				
+				acc -= GAME_TICK;
+				frm += GAME_TICK;
+			}
+			
+			input.update();
+			scene.update(frm * 0.001);
+			
+			context.interpolation = acc / GAME_TICK;
+			scene.render(context);
+			
 			scene.validate();
 		}
 		

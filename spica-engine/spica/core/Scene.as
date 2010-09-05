@@ -10,9 +10,10 @@ package spica.core
 		public function shutdown():void { }
 		
 		
-		public function update(elapsed:Number)      :void { }
-		public function render(render:RenderContext):void { }
-
+		public function onTick()                     :void { }
+		public function update(elapsed:Number)       :void { }
+		public function render(context:RenderContext):void { }
+		
 		
 		protected var video :VideoDriver   = null;
 		protected var audio :AudioDriver   = null;

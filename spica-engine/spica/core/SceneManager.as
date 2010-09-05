@@ -53,16 +53,9 @@ package spica.core
 		}
 		
 		
-		internal function update(elapsed:Number):void
-		{
-			scene.update(elapsed);
-		}
-		
-		
-		internal function render(render:RenderContext):void
-		{
-			scene.render(render);
-		}
+		internal function onTick()                     :void { scene.onTick(); }
+		internal function update(elapsed:Number)       :void { scene.update(elapsed); }
+		internal function render(context:RenderContext):void { scene.render(context); }
 		
 		
 		internal function validate():void
