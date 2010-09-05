@@ -29,26 +29,31 @@ package spica.core
 		}
 		
 		
-		public function initiate(width:int, height:int, fps:int, scale:Number):Game
+		private var maxDelta :int = 68;
+		private var gameTick :int = 34;
+		private var frameSkip:int = 2;
+
+		
+		public function initiate(width:int, height:int, scale:Number = 1.0, displayRate:int = 60, logicRate:int = 30, skip:int = 2):Game
 		{
-			video   = new VideoDriver(stage, width, height, fps, scale);
-			audio   = new AudioDriver();
-			input   = new InputDriver(stage);
+			video     = new VideoDriver(stage, width, height, displayRate, scale);
+			audio     = new AudioDriver();
+			input     = new InputDriver(stage);
 			
 			video.initiate();
 			audio.initiate();
 			input.initiate();
 			
-			scene   = new SceneManager(this);
-			camera  = new Camera(width, height);
-			context = new RenderContext(video.buffer, camera);
+			camera    = new Camera(width, height);
+			scene     = new SceneManager(this);
+			context   = new RenderContext(video.buffer, camera);
+			
+			gameTick  = int(Math.ceil(1000 / logicRate));
+			frameSkip = skip;
+			maxDelta  = gameTick * frameSkip;
 			
 			return this;
 		}
-		
-		
-		private const MAX_DELTA:int = 33;	// maximum dt is 33 ~ 30 frame per second
-		private const GAME_TICK:int = 16;	// defaulting to 60-ish frame per second :-/
 		
 		
 		private var old:int = 0;
@@ -94,23 +99,23 @@ package spica.core
 			dt  = now - old;
 			old = now;
 			
-			if (dt > MAX_DELTA)
-				dt = MAX_DELTA;
+			if (dt > maxDelta)
+				dt = maxDelta;
 				
 			acc += dt;
 			frm  = 0;
-			while (acc >= GAME_TICK)
+			while (acc >= gameTick)
 			{
 				scene.doTick();
 				
-				acc -= GAME_TICK;
-				frm += GAME_TICK;
+				acc -= gameTick;
+				frm += gameTick;
 			}
 			
 			input.update();
 			scene.update(frm * 0.001);
 			
-			context.interpolation = acc / GAME_TICK;
+			context.interpolation = acc / gameTick;
 			scene.render(context);
 			
 			scene.validate();
