@@ -20,6 +20,7 @@ package spica.core
 		
 		private var stage  :Stage         = null;
 		private var context:RenderContext = null;
+		private var focus  :Boolean       = true;
 		
 		
 		public function Game(stage:Stage)
@@ -60,16 +61,35 @@ package spica.core
 		public function run(entryPoint:Scene):Game
 		{
 			scene.goTo(entryPoint);
-			stage.addEventListener(Event.ENTER_FRAME, update);
+			
+			stage.addEventListener(Event.ACTIVATE   , onRecvFocus );
+			stage.addEventListener(Event.DEACTIVATE , onLostFocus );
+			stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		
 			old = getTimer();
-			
 			return this;
 		}
 		
 		
-		private function update(e:Event):void
+		private function onRecvFocus(e:Event):void
 		{
+			if (!focus)
+				focus = true;
+				
+		}
+		
+		
+		private function onLostFocus(e:Event):void
+		{
+			focus = false;
+		}
+		
+		
+		private function onEnterFrame(e:Event):void
+		{
+			if (!focus)
+				return;
+			
 			now = getTimer();
 			dt  = now - old;
 			old = now;
@@ -81,7 +101,7 @@ package spica.core
 			frm  = 0;
 			while (acc >= GAME_TICK)
 			{
-				scene.onTick();
+				scene.doTick();
 				
 				acc -= GAME_TICK;
 				frm += GAME_TICK;
