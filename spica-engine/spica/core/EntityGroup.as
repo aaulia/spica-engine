@@ -74,7 +74,7 @@ package spica.core
 		}
 		
 		
-		override public function doTick():void
+		override public function onTick():void
 		{
 			var entity:Entity = null;
 			var length:int    = members.length;
@@ -82,7 +82,7 @@ package spica.core
 			{
 				entity = members[ i ];
 				if (entity.isAlive && entity.isActive)
-					entity.doTick();
+					entity.onTick();
 					
 			}
 			

@@ -10,7 +10,7 @@ package spica.core
 		public function shutdown():void { }
 		
 		
-		public function doTick()                     :void { }
+		public function onTick()                     :void { }
 		public function update(elapsed:Number)       :void { }
 		public function render(context:RenderContext):void { }
 		

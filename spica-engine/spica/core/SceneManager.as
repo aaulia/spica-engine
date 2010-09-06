@@ -53,7 +53,7 @@ package spica.core
 		}
 		
 		
-		internal function doTick()                     :void { scene.doTick(); }
+		internal function onTick()                     :void { scene.onTick(); }
 		internal function update(elapsed:Number)       :void { scene.update(elapsed); }
 		internal function render(context:RenderContext):void { scene.render(context); }
 		
