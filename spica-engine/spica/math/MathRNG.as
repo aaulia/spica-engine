@@ -5,13 +5,13 @@ package spica.math
 	 * ...
 	 * @author
 	 */
-	public final class MathRND
+	public final class MathRNG
 	{
 		private const MAX_RATIO:Number = 1 / uint.MAX_VALUE;
 		private var   seed     :uint   = Math.random() * uint.MAX_VALUE;
 		
 		
-		public function MathRND(lock:Class)
+		public function MathRNG(lock:Class)
 		{
 			if (lock != SingletonLock)
 				throw new IllegalOperationError("You should not instantiate a Singleton Class");
