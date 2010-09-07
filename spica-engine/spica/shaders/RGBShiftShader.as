@@ -4,7 +4,7 @@ package spica.shaders
 	import flash.display.BitmapDataChannel;
 	import flash.geom.Point;
 	import spica.core.Shader;
-	import spica.math.ParkMillerRandom;
+	import spica.math.MathRNG;
 	
 	/**
 	 * ...
@@ -12,11 +12,12 @@ package spica.shaders
 	 */
 	public class RGBShiftShader extends Shader
 	{
-		public  var radius:int               = 2;
+		public  var radius :int        = 2;
 		
 		
-		private var rgbCh :BitmapData        = null;
-		private var point :Point             = null;
+		private var rgbCh  :BitmapData = null;
+		private var point  :Point      = null;
+		private var mathRng:MathRNG    = MathRNG.instance;
 		
 		
 		public function RGBShiftShader(width:int, height:int, radius:int = 2)
@@ -34,8 +35,8 @@ package spica.shaders
 			
 			for (var i:int = 0; i < 3; ++i)
 			{
-				point.x = -radius + Math.random() * (radius << 1);
-				point.y = -radius + Math.random() * (radius << 1);
+				point.x = -radius + mathRng.random() * (radius << 1);
+				point.y = -radius + mathRng.random() * (radius << 1);
 				
 				rgbCh.copyChannel(source, source.rect, point, BitmapDataChannel.ALPHA, BitmapDataChannel.ALPHA);
 				rgbCh.copyChannel(source, source.rect, point, 1 << i, 1 << i);

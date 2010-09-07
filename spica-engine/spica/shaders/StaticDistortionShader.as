@@ -5,7 +5,7 @@ package spica.shaders
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import spica.core.Shader;
-	import spica.math.ParkMillerRandom;
+	import spica.math.MathRNG;
 	
 	/**
 	 * ...
@@ -13,9 +13,10 @@ package spica.shaders
 	 */
 	public class StaticDistortionShader extends Shader
 	{
-		private var buffer:BitmapData            = null;
-		private var point :Point                 = null;
-		private var filter:DisplacementMapFilter = null;
+		private var buffer :BitmapData            = null;
+		private var point  :Point                 = null;
+		private var filter :DisplacementMapFilter = null;
+		private var mathRng:MathRNG               = MathRNG.instance;
 		
 		
 		public function StaticDistortionShader(width:int, height:int)
@@ -24,7 +25,7 @@ package spica.shaders
 			buffer = new BitmapData(width, height, true, 0x0);
 			for (var i:int = 0; i < height; ++i)
 			{
-				var c:int = Math.random() * 256;
+				var c:int = int(mathRng.random() * 256);
 				buffer.fillRect(new Rectangle(0, i, width, 1), c << 16 | 255 << 24);
 			}
 			
