@@ -117,7 +117,7 @@ package spica.display
 						if (c >= 0)
 						{
 							font.frame = c;
-							font.render(render);
+							font.render(context);
 						}
 						
 						font.x += font.width;
