@@ -65,6 +65,7 @@ package spica.display
 					case "\n": index[ i ] = NEWLINE;      break;
 					default  : index[ i ] = charMap[ c ]; break;
 				}
+				
 			}
 			
 		}
