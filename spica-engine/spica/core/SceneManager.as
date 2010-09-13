@@ -41,7 +41,7 @@ package spica.core
 			if ((next is SceneTransition) == true)
 				(next as SceneTransition).setup(game, onDirectReplace);
 			else
-				next.injectDependency(game);
+				next.initDependency(game);
 
 			if (scene != null)
 				scene.shutdown();
@@ -53,7 +53,7 @@ package spica.core
 		}
 		
 		
-		internal function onTick()                     :void { scene.onTick(); }
+		internal function doStep()                     :void { scene.doStep(); }
 		internal function update(elapsed:Number)       :void { scene.update(elapsed); }
 		internal function render(context:RenderContext):void { scene.render(context); }
 		

@@ -10,7 +10,7 @@ package spica.core
 		public function shutdown():void { }
 		
 		
-		public function onTick()                     :void { }
+		public function doStep()                     :void { }
 		public function update(elapsed:Number)       :void { }
 		public function render(context:RenderContext):void { }
 		
@@ -22,7 +22,7 @@ package spica.core
 		protected var camera:Camera        = null;
 		
 		
-		internal function injectDependency(game:Game):void
+		internal function initDependency(game:Game):void
 		{
 			video  = game.video;
 			audio  = game.audio;

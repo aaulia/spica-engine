@@ -106,7 +106,7 @@ package spica.core
 			frm  = 0;
 			while (acc >= gameTick)
 			{
-				scene.onTick();
+				scene.doStep();
 				
 				acc -= gameTick;
 				frm += gameTick;

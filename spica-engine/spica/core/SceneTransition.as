@@ -32,11 +32,11 @@ package spica.core
 		{
 			this.replace = replace;
 			
-			this.injectDependency(game);
+			this.initDependency(game);
 			src = video.buffer.clone();
 			dst = video.buffer.clone();
 			
-			next.injectDependency(game);
+			next.initDependency(game);
 			next.initiate();
 			next.render(new RenderContext(dst, camera));
 		}
