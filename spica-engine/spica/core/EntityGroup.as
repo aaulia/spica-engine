@@ -7,26 +7,26 @@ package spica.core
 	 */
 	public class EntityGroup extends Entity
 	{
-		public var members:Vector.<Entity> = new Vector.<Entity>();
+		public var members:/*Entity*/Array = [];
 		
 		
-		public function add(entity:Entity):Entity
+		public function add(entity:Entity):EntityGroup
 		{
 			var exist:int = members.indexOf(entity);
 			if (exist < 0)
 				members.push(entity);
 				
-			return entity;
+			return this;
 		}
 		
 		
-		public function remove(entity:Entity):Entity
+		public function remove(entity:Entity):EntityGroup
 		{
 			var exist:int = members.indexOf(entity);
 			if (exist >= 0)
 				members.splice(exist, 1);
 			
-			return entity;
+			return this;
 		}
 		
 		
@@ -121,7 +121,6 @@ package spica.core
 		
 		override public function shutdown():void
 		{
-			var entity:Entity = null;
 			var length:int    = members.length;
 			for (var i:int = 0; i < length; ++i)
 				members[ i ].shutdown();
