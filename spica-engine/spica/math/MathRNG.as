@@ -28,8 +28,8 @@ package spica.math
 		}
 		
 		
-		private static const _instance:MathRND = new MathRND(SingletonLock)
-		public static function get instance():MathRND
+		private static const _instance:MathRND = new MathRNG(SingletonLock)
+		public static function get instance():MathRNG
 		{
 			return _instance;
 		}
