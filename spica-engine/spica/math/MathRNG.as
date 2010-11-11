@@ -1,41 +1,29 @@
 package spica.math
 {
-	import flash.errors.IllegalOperationError;
 	/**
 	 * ...
-	 * @author
+	 * @author Achmad Aulia Noorhakim
 	 */
-	public final class MathRNG
+	public final class MathRng
 	{
-		private const MAX_RATIO:Number = 1 / uint.MAX_VALUE;
-		private var   seed     :uint   = Math.random() * uint.MAX_VALUE;
+		private static var seed:uint = Math.random() * uint.MAX_VALUE;
 		
 		
-		public function MathRNG(lock:Class)
+		public static function randomize(s:uint):void
 		{
-			if (lock != SingletonLock)
-				throw new IllegalOperationError("You should not instantiate a Singleton Class");
-			
+			seed = s;
 		}
 		
 		
-		public function random():Number
+		public static function random():Number
 		{
-			seed ^= (seed << 21);
+			seed ^= (seed <<  21);
 			seed ^= (seed >>> 35);
-			seed ^= (seed << 4);
-			return seed * MAX_RATIO;
-		}
-		
-		
-		private static const _instance:MathRND = new MathRNG(SingletonLock)
-		public static function get instance():MathRNG
-		{
-			return _instance;
+			seed ^= (seed <<   4);
+			
+			return seed * 2.3283064370807973754314699618685e-10;
 		}
 		
 	}
 
 }
-
-class SingletonLock { }

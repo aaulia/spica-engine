@@ -2,8 +2,6 @@ package spica.core
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.errors.IllegalOperationError;
-	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedSuperclassName;
 	/**
 	 * ...
@@ -11,18 +9,55 @@ package spica.core
 	 */
 	public final class BitmapCache
 	{
-		private var cache:Object = new Object();
+		private static var cache:Object = new Object();
+
 		
-		
-		public function BitmapCache(lock:Class)
+		public static function isExist(id:String):Boolean
 		{
-			if (lock != SingletonLock)
-				throw new IllegalOperationError("You should not instantiate a Singleton Class");
+			return cache[ id ] != null;
+		}
+		
+		
+		public static function create(width:int, height:int, id:String = ""):BitmapData
+		{
+			if (id == "")
+				id = width + "x" + height;
+
+			if (cache[ id ] != null)
+				return cache[ id ];
 				
+			return cache[ id ] = new BitmapData(width, height, true, 0x00000000);
+		}
+		
+		
+		public static function getBitmap(id:String):BitmapData
+		{
+			return id != ""
+				? cache[ id ]
+				: null;
+		}
+		
+		
+		public static function getBitmapByClass(asset:Class):BitmapData
+		{
+			if (asset == null)
+				return null;
+			
+			var id:String = String(asset);
+			if (cache[ id ] != null)
+				return cache[ id ];
+				
+			var ancestor:String = getQualifiedSuperclassName(asset);
+			if (ancestor.indexOf("BitmapData") >= 0)
+				cache[ id ] = (new asset(0, 0) as BitmapData);
+			else
+				cache[ id ] = (new asset() as Bitmap).bitmapData;
+				
+			return cache[ id ];
 		}
 
 		
-		public function clear():void
+		public static function clear():void
 		{
 			for each(var bitmapData:BitmapData in cache)
 				if (bitmapData != null)
@@ -31,32 +66,6 @@ package spica.core
 			cache = new Object();
 		}
 		
-		
-		public function getBitmap(linkage:Class):BitmapData
-		{
-			var id:String = String(linkage);
-			if (cache[ id ] != null)
-				return cache[ id ];
-				
-			var ancestor:String = getQualifiedSuperclassName(linkage);
-			if (ancestor.indexOf("BitmapData") >= 0)
-				cache[ id ] = new linkage(0, 0) as BitmapData;
-			else
-				cache[ id ] = (new linkage() as Bitmap).bitmapData;
-				
-			return cache[ id ];
-		}
-
-		
-		
-		private static var _instance:BitmapCache = new BitmapCache(SingletonLock);
-		public static function get instance():BitmapCache 
-		{
-			return _instance; 
-		}
-		
 	}
 
 }
-
-class SingletonLock { }

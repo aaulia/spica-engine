@@ -1,5 +1,6 @@
 package spica.core
 {
+	import flash.events.ActivityEvent;
 	import spica.core.RenderContext;
 	/**
 	 * ...
@@ -7,96 +8,91 @@ package spica.core
 	 */
 	public class EntityGroup extends Entity
 	{
-		public var members:/*Entity*/Array = [];
+		protected var nodes:Vector.<Entity> = new Vector.<Entity>();
 		
 		
-		public function add(entity:Entity):EntityGroup
+		public function get numAlive():int
 		{
-			var exist:int = members.indexOf(entity);
-			if (exist < 0)
-				members.push(entity);
-				
-			return this;
+			var count :int = 0;
+			var length:int = nodes.length;
+			for (var i:int = 0; i < length; ++i)
+				if (nodes[ i ].alive)
+					++count;
+					
+			
+			return count;
 		}
 		
 		
-		public function remove(entity:Entity):EntityGroup
+		public function get numDead():int
 		{
-			var exist:int = members.indexOf(entity);
-			if (exist >= 0)
-				members.splice(exist, 1);
+			var count :int = 0;
+			var length:int = nodes.length;
+			for (var i:int = 0; i < length; ++i)
+				if (!nodes[ i ].alive)
+					++count;
+					
 			
-			return this;
+			return count;
 		}
 		
 		
 		public function getFirstDead():Entity
 		{
-			var length:int = members.length;
+			var length:int = nodes.length;
 			for (var i:int = 0; i < length; ++i)
-			{
-				if (!members[ i ].isAlive)
-					return members[ i ];
-					
-			}
+				if (!nodes[ i ].alive)
+					return nodes[ i ];
+				
 			
 			return null;
 		}
 		
 		
-		public function get deadCount():int
+		public function add(entity:Entity):Entity
 		{
-			var count :int = 0;
-			var length:int = members.length;
-			for (var i:int = 0; i < length; ++i)
-			{
-				if (!members[ i ].isAlive)
-					++count;
-					
-			}
+			if (nodes.indexOf(entity) < 0)
+				nodes[ nodes.length ] = entity;
 			
-			return count;
+			return entity;
 		}
 		
 		
-		public function get aliveCount():int
+		public function del(entity:Entity):Entity
 		{
-			var count :int = 0;
-			var length:int = members.length;
-			for (var i:int = 0; i < length; ++i)
-			{
-				if (members[ i ].isAlive)
-					++count;
-					
-			}
-			
-			return count;
+			var index:int = nodes.indexOf(entity);
+			if (index >= 0)
+				nodes.splice(index, 1);
+				
+			return entity;
 		}
 		
 		
-		override public function doStep():void
+		override public function step():void
 		{
+			var length:int    = nodes.length;
 			var entity:Entity = null;
-			var length:int    = members.length;
+			
 			for (var i:int = 0; i < length; ++i)
 			{
-				entity = members[ i ];
-				if (entity.isAlive && entity.isActive)
-					entity.doStep();
+				entity = nodes[ i ];
+				if (entity.alive && entity.active)
+					entity.step();
 					
 			}
-			
+				
 		}
 		
 		
-		override public function update(elapsed:Number):void
+		override public function update(elapsed:int):void
 		{
+			var length:int    = nodes.length;
 			var entity:Entity = null;
-			var length:int    = members.length;
+			
 			for (var i:int = 0; i < length; ++i)
 			{
-				entity = members[ i ];
-				if (entity.isAlive && entity.isActive)
+				entity = nodes[ i ];
+				if (entity.alive && entity.active)
 					entity.update(elapsed);
 					
 			}
@@ -106,12 +102,13 @@ package spica.core
 		
 		override public function render(context:RenderContext):void
 		{
+			var length:int    = nodes.length;
 			var entity:Entity = null;
-			var length:int    = members.length;
+			
 			for (var i:int = 0; i < length; ++i)
 			{
-				entity = members[ i ];
-				if (entity.isAlive && entity.isVisible)
+				entity = nodes[ i ];
+				if (entity.alive && entity.visible)
 					entity.render(context);
 					
 			}
@@ -119,11 +116,45 @@ package spica.core
 		}
 		
 		
-		override public function shutdown():void
+		override public function dispose():void
 		{
-			var length:int    = members.length;
+			var length:int = nodes.length;
 			for (var i:int = 0; i < length; ++i)
-				members[ i ].shutdown();
+				nodes[ i ].dispose();
+				
+		}
+		
+		
+		public static function operateOn(a:EntityGroup, b:EntityGroup, func:Function, oneTime:Boolean = false):void
+		{
+			var anode:Vector.<Entity> = a.nodes;
+			var asize:int             = anode.length;
+			var ainst:Entity          = null;
+			
+			var bnode:Vector.<Entity> = b.nodes;
+			var bsize:int             = bnode.length;
+			var binst:Entity          = null;
+			
+			for (var i:int = 0; i < asize; ++i)
+			{
+				ainst = anode[ i ];
+				if (!ainst || !ainst.alive)
+					continue;
+				
+				for (var j:int = 0; j < bsize; ++j)
+				{
+					binst = bnode[ j ];
+					if (!binst || !binst.alive)
+						continue;
+						
+					func(ainst, binst);
+					
+					if (!ainst.alive || oneTime)
+						break;
+						
+				}
+				
+			}
 			
 		}
 		

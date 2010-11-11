@@ -1,6 +1,5 @@
 package spica.display
 {
-	import spica.core.Entity;
 	import spica.core.RenderContext;
 	
 	/**
@@ -9,156 +8,140 @@ package spica.display
 	 */
 	public class Animation extends Visual
 	{
-		private var sprite   :Sprite            = null;
-		private var sequences:Vector.<Sequence> = null;
-		private var seqIndex :int               = -1;
-		private var frmIndex :int               = 0;
-		private var timer    :Number            = 0;
-		private var loop     :int               = -1;
-		private var onFinish :Function          = null;
+		private var spr:Sprite       = null;
+		public function get sprite():Sprite { return spr; }
+		public function set sprite(v:Sprite):void
+		{
+			if (v != spr)
+			{
+				width   = v.width;
+				height  = v.height;
+				spr = v;
+			}
 			
+		}
 		
-		public function Animation(linkage:Class = null, width:int = 0, height:int = 0)
+		public  var name   :String   = "";				/** read-only */
+		public  var current:Sequence = null;			/** read-only */
+		
+		
+		private var series :Object   = new Object();
+		private var timer  :int      = 0;
+		private var delta  :int      = 0;
+		private var index  :int      = 0;
+		private var loop   :int      = 0;
+		
+		
+		private var playing:Boolean  = false;
+		public function get isPlaying():Boolean
 		{
-			sprite    = new Sprite(linkage, width, height);
-			sequences = new Vector.<Sequence>();
-			isActive  = false;
+			return playing;
 		}
 		
 		
-		public function loadBitmap(linkage:Class, width:int, height:int):Animation
+		public function Animation(sprite:Sprite = null)
 		{
-			sprite.loadBitmap(linkage, width, height);
-			clearSequences();
-			
-			return this;
+			this.sprite = sprite;
 		}
 		
 		
-		override public function get width ():int { return sprite.width;  }
-		override public function get height():int { return sprite.height; }
-		
-		
-		public function addSequence(name:String, indexes:Array, fps:int):Animation
+		public function addSeq(name:String, frames:Vector.<int>, fps:int):void
 		{
-			sequences.push(new Sequence(name, indexes, fps));
-			return this;
+			series[ name ] =
+			current        = new Sequence(frames, fps);
+			this.name      = name;
 		}
 		
 		
-		public function play(name:String = "", loop:int = -1, onFinish:Function = null):Animation
+		public function clear():void
 		{
-			if (name != "")
-				seqIndex = getSequenceIndex(name);
-				
-			this.loop     = loop;
-			this.onFinish = onFinish;
-			isActive      = (seqIndex > -1);
-			isVisible     = (seqIndex > -1);
-			
-			return this;
-		}
-		
-		
-		public function stop():Animation
-		{
-			frmIndex  = 0;
-			timer     = 0;
-			isActive  = false;
-			isVisible = false;
-			
-			return this;
-		}
-		
-		
-		public function pause():Animation
-		{
- 			isActive = false;
-			return this;
-		}
-		
-		
-		public function clearSequences():Animation
-		{
-			sequences = new Vector.<Sequence>();
-			seqIndex  = -1;
 			stop();
-			return this;
+			for each (var n:String in series)
+				series[ n ] = null;
+				
+			name    = "";
+			current = null;
 		}
 		
 		
-		public function get sequenceName():String
+		public function play(name:String = "", loop:int = 0):void
 		{
-			return seqIndex >= 0
-				? sequences[ seqIndex ].name
-				: "";
-		}
-		
-		
-		private function getSequenceIndex(name:String):int
-		{
-			var length:int = sequences.length;
-			for (var i:int = 0; i < length; ++i)
-				if (sequences[ i ].name == name)
-					return i;
+			if (name == "")
+				return;
+				
+			if (!playing || this.name != name)
+			{
+				this.name = name;
+				current   = series[ this.name ];
+				
+				if (current == null)
+					throw "[Animation:Error] There is no sequence named: " + name + "!";
+				
+				index     = 0;
+				delta     = int(1000 / current.fps);
+				timer     = 0;
+			}
 			
-			return -1;
+			if (delta <= 0)
+				throw "Something is VERY wrong with the animation " + name + ", delta time shouldn't be 0 or less >.<!\n"
+			
+			this.loop = loop;
+			playing   = true;
+		}
+		
+		
+		public function stop():void
+		{
+			playing = false;
+		}
+		
+		
+		override public function update(elapsed:int):void
+		{
+			if (playing == false)
+				return;
+				
+			timer += elapsed;
+			while (timer >= delta)
+			{
+				index  = (index + 1) % current.length;
+				if (index == 0)
+					if (loop > 0)
+						if (--loop == 0)
+						{
+							index = current.length - 1;
+							stop();
+						}
+				
+				timer -= delta;
+			}
+			
 		}
 		
 		
 		override public function render(context:RenderContext):void
 		{
-			if (seqIndex < 0)
+			if (spr == null || current == null || context.buffer == null)
 				return;
 			
-			sprite.x       = x;
-			sprite.y       = y;
-			sprite.offsetX = offsetX;
-			sprite.offsetY = offsetY;
-			sprite.scroll  = scroll;
-			sprite.frame   = sequences[ seqIndex ].indexes[ frmIndex ];
+			spr.x       = x;
+			spr.y       = y;
+			spr.offsetX = offsetX;
+			spr.offsetY = offsetY;
+			spr.scrollX = scrollX;
+			spr.scrollY = scrollY;
+			spr.frame   = current.frames[ index ];
 			
-			sprite.render(context);
-		}
-
-		
-		override public function update(elapsed:Number):void
-		{
-			if (seqIndex == -1)
-				return;
-				
-			var seqLength:int = sequences[ seqIndex ].length as int;
-			
-			timer += elapsed;
-			while (timer >= sequences[ seqIndex ].delay)
-			{
-				timer -= sequences[ seqIndex ].delay;
-				frmIndex++;
-				
-				if (loop > 0 && frmIndex == seqLength)
-					if (--loop == 0)
-					{
-						stop();
-						if (onFinish != null)
-							onFinish(this);
-							
-						return;
-					}
-				
-			}
-			
-			frmIndex %= seqLength;
+			spr.render(context);
 		}
 		
 		
-		override public function shutdown():void
+		override public function dispose():void
 		{
-			sprite.shutdown();
-			
-			sprite    = null;
-			sequences = null;
-			seqIndex  = -1;
-			frmIndex  = -1;
+			clear();
+			if (spr)
+				spr.dispose();
+				
 		}
 		
 	}
@@ -166,21 +149,24 @@ package spica.display
 }
 
 
-
 class Sequence
 {
-	public var name   :String = "";
-	public var indexes:Array  = [];
-	public var delay  :Number = 0;
-	public var length :int    = 0;
+	public var frames:Vector.<int> = null;	/** read-only */
+	public var fps   :int          = 0;		/** read-only */
+	public var length:int          = 0;		/** read-only */
 	
 	
-	public function Sequence(name:String, indexes:Array, fps:int)
+	public function Sequence(frames:Vector.<int>, fps:int)
 	{
-		this.name    = name;
-		this.indexes = indexes.concat();
-		this.delay   = 1 / fps;
-		this.length  = indexes.length;
+		this.frames = frames.concat();
+		this.fps    = fps;
+		this.length = frames.length;
+	}
+	
+	
+	public function toString():String
+	{
+		return "[Sequence frames=" + frames + " fps=" + fps + " length=" + length + "]";
 	}
 	
 }

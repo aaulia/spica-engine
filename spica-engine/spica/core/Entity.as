@@ -1,20 +1,21 @@
 package spica.core
 {
+	import flash.display.BitmapData;
 	/**
 	 * ...
 	 * @author Achmad Aulia Noorhakim
 	 */
 	public class Entity
 	{
-		public var isAlive  :Boolean = true;
-		public var isActive :Boolean = true;
-		public var isVisible:Boolean = true;
+		public var alive  :Boolean = true;	/** flag for polling       */
+		public var visible:Boolean = true;	/** flag for rendering     */
+		public var active :Boolean = true;	/** flag for update & tick */
 		
 		
-		public function doStep  ()                     :void { }
-		public function update  (elapsed:Number)       :void { }
-		public function render  (context:RenderContext):void { }
-		public function shutdown()                     :void { }
+		public function step   ()                     :void { /** override */ }
+		public function update (elapsed:int)          :void { /** override */ }
+		public function render (context:RenderContext):void { /** override */ }
+		public function dispose()                     :void { /** override */ }
 		
 	}
 

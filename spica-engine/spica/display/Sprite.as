@@ -5,96 +5,71 @@ package spica.display
 	import flash.geom.Rectangle;
 	import spica.core.BitmapCache;
 	import spica.core.Camera;
-	import spica.core.Entity;
 	import spica.core.RenderContext;
-	
 	/**
 	 * ...
 	 * @author Achmad Aulia Noorhakim
 	 */
 	public class Sprite extends Visual
 	{
-		private var _frame :int                = -1;
-		private var _height:int                = -1;
-		private var _width :int                = -1;
+		public    var frameCount:int                = 0; /** read-only */
+		public    var frame     :int                = 0;
 		
 		
-		private var bitmap :BitmapData         = null;
-		private var frames :Vector.<Rectangle> = null;
-		private var point  :Point              = new Point();
+		protected var buffer    :BitmapData         = null;
+		protected var frames    :Vector.<Rectangle> = null;
+		protected var point     :Point              = new Point();
 		
 		
-		public function Sprite(linkage:Class = null, width:int = 0, height:int = 0)
+		public function Sprite(asset:Class = null, w:int = 0, h:int = 0)
 		{
-			if (linkage != null)
-				loadBitmap(linkage, width, height);
-				
+			load(asset, w, h);
 		}
 		
-		
-		public function loadBitmap(linkage:Class, width:int, height:int):Sprite
+		public function load(asset:Class, w:int = 0, h:int = 0):void
 		{
-			bitmap = BitmapCache.instance.getBitmap(linkage);
-			frames = new Vector.<Rectangle>();
+			if (asset == null)
+				return;
 			
-			if (width  == 0) width  = bitmap.width;
-			if (height == 0) height = bitmap.height;
+			buffer     = BitmapCache.getBitmapByClass(asset);
+			frames     = new Vector.<Rectangle>();
+			frame      = 0;
+			frameCount = 0
 			
-			for (var i:int = 0; i < bitmap.height; i += height)
-				for (var j:int = 0; j < bitmap.width; j += width)
-					frames.push(new Rectangle(j, i, width, height));
-					
-			_frame  = 0;
-			_width  = width;
-			_height = height;
+			if (w == 0) w = buffer.width;
+			if (h == 0) h = buffer.height;
 			
-			return this;
-		}
-		
-		
-		override public function get width ():int  { return _width;  }
-		override public function get height():int  { return _height; }
-		
-		
-		public function get frameCount():int  { return frames.length; }
-		public function get frame()     :int  { return _frame; }
-		
-		
-		public function set frame(f:int):void
-		{
-			_frame = f % frames.length;
+			var r:int  = int(buffer.height / h);
+			var c:int  = int(buffer.width  / w);
+			for (var j:int = 0; j < r; ++j)
+				for (var i:int = 0; i < c; ++i)
+					frames[ frameCount++ ] = new Rectangle(i * w, j * h, w, h);
+			
+			
+			width      = w;
+			height     = h;
 		}
 		
 		
 		override public function render(context:RenderContext):void
 		{
-			var camera:Camera     = context.camera;
-			var buffer:BitmapData = context.buffer;
+			var scr:BitmapData = context.buffer;
+			var cam:Camera     = context.camera;
 			
-			if (scroll != 0 && camera != null)
-			{
-				point.x = x - offsetX + int(0.5 + camera.offsetX * scroll);
-				point.y = y - offsetY + int(0.5 + camera.offsetY * scroll);
-			}
-			else
-			{
-				point.x = x - offsetX;
-				point.y = y - offsetY;
-			}
-			
-			if (point.x < -_width  || point.x > buffer.width ||
-			    point.y < -_height || point.y > buffer.height)
-			{
+			if (scr == null)
 				return;
-			}
+
+			calcRenderPos(cam, point);
 			
-			buffer.copyPixels(bitmap, frames[ _frame ], point, null, null, true);
+			if (point.x < -width || point.y < -height || point.x > scr.width || point.y > scr.height)
+				return;
+				
+			scr.copyPixels(buffer, frames[ frame ], point, null, null, true);
 		}
 		
-		
-		override public function shutdown():void
+		override public function dispose():void
 		{
-			bitmap = null;
+			buffer = null;
 			frames = null;
 			point  = null;
 		}

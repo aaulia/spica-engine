@@ -7,8 +7,8 @@ package spica.algorithm.pathfinding
 	 */
 	public class AStar
 	{
-		private static const ORTHOGONAL_COST:int = 2;
-		private static const DIAGONAL_COST  :int = 3;
+		private const ORTHOGONAL_COST:int = 2;
+		private const DIAGONAL_COST  :int = 3;
 		
 		
 		private var map   :Vector.<int>  = null;
@@ -135,7 +135,8 @@ package spica.algorithm.pathfinding
 				
 				result.reverse();
 			}
-			else if (nearest)
+			else
+			if (nearest)
 			{
 				closed.sort(sortH);
 				
@@ -154,16 +155,8 @@ package spica.algorithm.pathfinding
 		}
 		
 		
-		private function sortH(a:Node, b:Node):int
-		{
-			return a.H - b.H;
-		}
-		
-		
-		private function sortF(a:Node, b:Node):int
-		{
-			return b.F - a.F;
-		}
+		private function sortH(a:Node, b:Node):int { return a.H - b.H; }
+		private function sortF(a:Node, b:Node):int { return b.F - a.F; }
 		
 	}
 
