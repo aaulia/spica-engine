@@ -4,7 +4,7 @@ package spica.math
 	 * ...
 	 * @author Achmad Aulia Noorhakim
 	 */
-	public final class MathRng
+	public final class MathRNG
 	{
 		private static var seed:uint = Math.random() * uint.MAX_VALUE;
 		
