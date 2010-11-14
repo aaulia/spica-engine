@@ -19,9 +19,9 @@ package spica.display
 		public  var tileHeight:int          = 0; 	/** read-only */
 
 		
-		private var data      :Vector.<int> = new Vector.<int>();
-		private var sprite    :Sprite       = new Sprite();
-		private var point     :Point        = new Point();
+		protected var data    :Vector.<int> = new Vector.<int>();
+		protected var sprite  :Sprite       = new Sprite();
+		protected var point   :Point        = new Point();
 		
 		
 		public function TileMap(map:XML = null, tileSets:Class = null, layerName:String = "")
