@@ -38,14 +38,14 @@ package spica.core
 		private  var invTick    :Number                 = 0.0;
 		
 		
-		public function initialize
-			( parent   :DisplayObjectContainer
-			, width    :int
-			, height   :int
-			, scale    :Number = 1.0
-			, frameRate:int    = 60
-			, logicRate:int    = 60
-			, frameSkip:int    = 2 ):Boolean
+		public function initialize(
+			parent   :DisplayObjectContainer,
+			width    :int,
+			height   :int,
+			scale    :Number = 1.0,
+			frameRate:int    = 60,
+			logicRate:int    = 60,
+			frameSkip:int    = 2 ):Boolean
 		{
 			var version :Array   = Capabilities.version.split(" ")[ 1 ].split(",");
 			var major   :int     = int(version[ 0 ]);
