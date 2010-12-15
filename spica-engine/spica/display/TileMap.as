@@ -81,16 +81,9 @@ package spica.display
 			 */
 			var layer:XMLList = map.layer.(@name == layerName);
 			if (layer)
-			{
-				loadFromVector(
-					vectorFromXml(layer.data.tile),
-					int(layer.@width),
-					int(layer.@height),
-					tileSets );
-				
-			}
+				loadFromVector(vectorFromXml(layer.data.tile), int(layer.@width), int(layer.@height));
 			else
-				throw "Layer " + layerName + " not found!";
+				throw Error("Layer " + layerName + " not found!");
 				
 		}
 		
