@@ -82,13 +82,11 @@ package spica.display
 		
 		protected function calcAutoTileFrame(i:int, j:int, c:int, r:int):int
 		{
-			var x:int = i + (c == 0 ? -1 : 1);
-			var y:int = j + (r == 0 ? -1 : 1);
+			var x:int = (c == 0 ? -1 : 1) + i;
+			var y:int = (r == 0 ? -1 : 1) + j;
 			var h:int = (x < 0 || x >= mapWidth)  ? 1 : data[x + j * mapWidth];
 			var v:int = (y < 0 || y >= mapHeight) ? 1 : data[i + y * mapWidth];
-			var f:int = 0;
-			
-			f = v + (2 * h);
+			var f:int = (2 * h) + v;
 			
 			if (f == 3)
 				if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight || data[x + y * mapWidth])

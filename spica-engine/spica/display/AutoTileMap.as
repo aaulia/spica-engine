@@ -80,14 +80,10 @@ package spica.display
 			var r:int = i + 1;
 			var f:int = 0;
 
-			if (t >= 0 && t < mapHeight && data[i + t * mapWidth])
-				f += TOP;
-			if (d >= 0 && d < mapHeight && data[i + d * mapWidth])
-				f += DOWN;
-			if (l >= 0 && l < mapWidth && data[l + j * mapWidth])
-				f += LEFT;
-			if (r >= 0 && r < mapWidth && data[r + j * mapWidth])
-				f += RIGHT;
+			if (t >= 0 && t < mapHeight && data[i + t * mapWidth]) f += TOP;
+			if (d >= 0 && d < mapHeight && data[i + d * mapWidth]) f += DOWN;
+			if (l >= 0 && l < mapWidth  && data[l + j * mapWidth]) f += LEFT;
+			if (r >= 0 && r < mapWidth  && data[r + j * mapWidth]) f += RIGHT;
 
 			return f;
 		}
