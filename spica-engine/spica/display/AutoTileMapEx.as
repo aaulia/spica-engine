@@ -7,30 +7,29 @@ package spica.display
 
 	public class AutoTileMapEx extends TileMap
 	{
-		public function AutoTileMapEx(map:XML = null, tileSets:Class = null, layerName:String = "")
+		public function AutoTileMapEx(mapWidth:int, mapHeight:int)
 		{
-			super(map, tileSets, layerName);
+			super(mapWidth, mapHeight);
 		}
 
-		public override function loadFromVector(data:Vector.<int>, tileWidth:int, tileHeight:int, mapWidth:int, mapHeight:int, tileSets:Class):void
+		override public function setTileSet(tileSet:Class, tileWidth:int, tileHeight:int):void
 		{
-			this.tileWidth  = tileWidth;
-			this.tileHeight = tileHeight;
-			this.mapWidth   = mapWidth;
-			this.mapHeight  = mapHeight;
-			this.data       = data.concat();
-			
-			this.width      = mapWidth  * tileWidth;
-			this.height     = mapHeight * tileHeight;
-			
 			sprite.load(tileSets, tileWidth / 2, tileHeight / 2);
 			sprite.scrollX  = 0;
 			sprite.scrollY  = 0;
+			
+			this.tileWidth  = tileWidth;
+			this.tileHeight = tileHeight;
+			this.width      = this.mapWidth  * tileWidth;
+			this.height     = this.mapHeight * tileHeight;
 		}
 		
 		
 		public override function render(context:RenderContext):void
 		{
+			if (data.lengt == 0 || sprite.frameCount == 0)
+				return;
+			
 			var scr:BitmapData = context.buffer;
 			var cam:Camera     = context.camera;
 			
@@ -74,7 +73,7 @@ package spica.display
 							sprite.x     = posX + (c * (tileWidth / 2));
 							sprite.frame = calcAutoTileFrame(i, j, c, r);
 							sprite.render(context);
-						}						
+						}
 					}
 				}
 			}

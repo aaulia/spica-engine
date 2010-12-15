@@ -8,9 +8,9 @@ package spica.display
 
 	public class AutoTileMap extends TileMap
 	{
-		public function AutoTileMap(map:XML = null, tileSets:Class = null, layerName:String = "")
+		public function AutoTileMap(mapWidth:int, mapHeight:int)
 		{
-			super(map, tileSets, layerName);
+			super(mapWidth, mapHeight);
 		}
 
 
@@ -23,6 +23,9 @@ package spica.display
 
 		public override function render(context:RenderContext):void
 		{
+			if (data.length == 0 || sprite.frameCount == 0)
+				return;
+			
 			var scr:BitmapData = context.buffer;
 			var cam:Camera     = context.camera;
 

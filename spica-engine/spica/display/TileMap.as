@@ -24,50 +24,57 @@ package spica.display
 		protected var point   :Point        = new Point();
 		
 		
-		public function TileMap(map:XML = null, tileSets:Class = null, layerName:String = "")
+		public function TileMap(mapWidth:int, mapHeight:int)
 		{
-			if (map && tileSets && layerName)
-				loadFromXML(map, layerName, tileSets);
+			if (mapWidth && mapHeight)
+				initialize(mapWidth, mapHeight);
+		}
+		
+		public function initialize(mapWidth:int, mapHeight:int):void
+		{
+			this.mapWidth  = mapWidth;
+			this.mapHeight = mapHeight;
+			this.width     = mapWidth  * this.tileWidth;
+			this.height    = mapHeight * this.tileHeight;
+			
+			var total:int = mapWidth * mapHeight;
+			data = new Vector.<int>();
+			for (var i:int = 0; i < total; ++i)
+				data[ i ] = 0;
 				
 		}
 		
-		
-		public function loadFromVector
-			( data      :Vector.<int>
-			, tileWidth :int
-			, tileHeight:int
-			, mapWidth  :int
-			, mapHeight :int
-			, tileSets  :Class):void
+		public function setTileSet(tileSet:Class, tileWidth:int, tileHeight:int):void
 		{
-			/**
-			 * load map data
-			 */
+			sprite.load(tileSet, tileWidth, tileHeight);
+			sprite.scrollX  = 0;
+			sprite.scrollY  = 0;
+			
 			this.tileWidth  = tileWidth;
 			this.tileHeight = tileHeight;
-			this.mapWidth   = mapWidth;
-			this.mapHeight  = mapHeight;
-			this.data       = data.concat();
-			
-			this.width      = mapWidth  * tileWidth;
-			this.height     = mapHeight * tileHeight;
-			
-			/**
-			 * load tileset
-			 */
-			sprite.load(tileSets, tileWidth, tileHeight);
-			sprite.scrollX = 0;
-			sprite.scrollY = 0;
+			this.width      = this.mapWidth  * tileWidth;
+			this.height     = this.mapHeight * tileHeight;
+		}
+		
+		public function loadFromVector(
+			data      :Vector.<int>,
+			mapWidth  :int,
+			mapHeight :int ):void
+		{
+			this.data      = data.concat();
+			this.mapWidth  = mapWidth;
+			this.mapHeight = mapHeight;
+			this.width     = mapWidth  * this.tileWidth;
+			this.height    = mapHeight * this.tileHeight;
 		}
 		
 		
-		public function loadFromXML
-			( map      :XML
-			, layerName:String
-			, tileSets :Class):void
+		public function loadFromXML(
+			map      :XML,
+			layerName:String ):void
 		{
-			if (map == null || tileSets == null || layerName == "")
-				throw "Invalid loading parameters, map: " + map + ", tilesets: " + tileSets + ", layerName: " + layerName;
+			if (map == null || layerName == "")
+				throw "Invalid loading parameters, map: " + map + ", layerName: " + layerName;
 			
 			/**
 			 * parse map data
@@ -75,13 +82,11 @@ package spica.display
 			var layer:XMLList = map.layer.(@name == layerName);
 			if (layer)
 			{
-				loadFromVector
-					( vectorFromXml(layer.data.tile)
-					, int(map.@tilewidth)
-					, int(map.@tileheight)
-					, int(layer.@width)
-					, int(layer.@height)
-					, tileSets );
+				loadFromVector(
+					vectorFromXml(layer.data.tile),
+					int(layer.@width),
+					int(layer.@height),
+					tileSets );
 				
 			}
 			else
@@ -107,6 +112,9 @@ package spica.display
 		
 		override public function render(context:RenderContext):void
 		{
+			if (data.length == 0 || sprite.frameCount == 0)
+				return;
+			
 			var scr:BitmapData = context.buffer;
 			var cam:Camera     = context.camera;
 			
