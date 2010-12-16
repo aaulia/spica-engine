@@ -8,7 +8,7 @@ package spica.display
 
 	public class AutoTileMap extends TileMap
 	{
-		public function AutoTileMap(mapWidth:int, mapHeight:int)
+		public function AutoTileMap(mapWidth:int = 0, mapHeight:int = 0)
 		{
 			super(mapWidth, mapHeight);
 		}

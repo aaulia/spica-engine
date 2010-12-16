@@ -24,8 +24,11 @@ package spica.display
 		protected var point   :Point        = new Point();
 		
 		
-		public function TileMap(mapWidth:int, mapHeight:int)
+		public function TileMap(mapWidth:int = 0, mapHeight:int = 0)
 		{
+			sprite.scrollX = 0;
+			sprite.scrollY = 0;
+			
 			if (mapWidth && mapHeight)
 				initialize(mapWidth, mapHeight);
 		}
@@ -47,8 +50,6 @@ package spica.display
 		public function setTileSet(tileSet:Class, tileWidth:int, tileHeight:int):void
 		{
 			sprite.load(tileSet, tileWidth, tileHeight);
-			sprite.scrollX  = 0;
-			sprite.scrollY  = 0;
 			
 			this.tileWidth  = tileWidth;
 			this.tileHeight = tileHeight;
@@ -69,9 +70,7 @@ package spica.display
 		}
 		
 		
-		public function loadFromXML(
-			map      :XML,
-			layerName:String ):void
+		public function loadFromXML(map:XML, layerName:String ):void
 		{
 			if (map == null || layerName == "")
 				throw "Invalid loading parameters, map: " + map + ", layerName: " + layerName;

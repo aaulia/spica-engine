@@ -7,16 +7,14 @@ package spica.display
 
 	public class AutoTileMapEx extends TileMap
 	{
-		public function AutoTileMapEx(mapWidth:int, mapHeight:int)
+		public function AutoTileMapEx(mapWidth:int = 0, mapHeight:int = 0)
 		{
 			super(mapWidth, mapHeight);
 		}
 
 		override public function setTileSet(tileSet:Class, tileWidth:int, tileHeight:int):void
 		{
-			sprite.load(tileSets, tileWidth / 2, tileHeight / 2);
-			sprite.scrollX  = 0;
-			sprite.scrollY  = 0;
+			sprite.load(tileSet, tileWidth / 2, tileHeight / 2);
 			
 			this.tileWidth  = tileWidth;
 			this.tileHeight = tileHeight;
@@ -27,7 +25,7 @@ package spica.display
 		
 		public override function render(context:RenderContext):void
 		{
-			if (data.lengt == 0 || sprite.frameCount == 0)
+			if (data.length == 0 || sprite.frameCount == 0)
 				return;
 			
 			var scr:BitmapData = context.buffer;
@@ -84,8 +82,8 @@ package spica.display
 		{
 			var x:int = (c == 0 ? -1 : 1) + i;
 			var y:int = (r == 0 ? -1 : 1) + j;
-			var h:int = (x < 0 || x >= mapWidth)  ? 1 : data[x + j * mapWidth];
-			var v:int = (y < 0 || y >= mapHeight) ? 1 : data[i + y * mapWidth];
+			var h:int = (x < 0 || x >= mapWidth)  ? 0 : data[x + j * mapWidth];
+			var v:int = (y < 0 || y >= mapHeight) ? 0 : data[i + y * mapWidth];
 			var f:int = (2 * h) + v;
 			
 			if (f == 3)
