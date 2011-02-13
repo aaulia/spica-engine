@@ -14,11 +14,11 @@ package spica.core.font
 		public var xAdv:int       = 0;		/** read-only */
 		
 		
-		public function Char
-			( rect:Rectangle
-			, xOff:int
-			, yOff:int
-			, xAdv:int )
+		public function Char( 
+			rect:Rectangle,
+			xOff:int,
+			yOff:int,
+			xAdv:int)
 		{
 			this.rect = rect;
 			this.xOff = xOff;
