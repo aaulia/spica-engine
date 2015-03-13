@@ -1,0 +1,2 @@
+# Description #
+Spica is an engine that I made for my personal use, its pretty simple and doesn't contains the advanced stuff like rotation, alpha blending (yet ? :p), just plain old blit. I tried to keep it as simple as possible.
